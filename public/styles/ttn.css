@@ -1,0 +1,46 @@
+#dropdownCheck {
+    width: 20px;
+    height: 15px;
+}
+
+.selected {
+    background-color: #007bff;
+}
+
+#btnClose a {
+    color: #fff;
+}
+
+#btnClose a:hover {
+    text-decoration: none;
+}
+
+.marked {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* .cosmeticsTbodyTr  */
+
+#cosmeticsDataTable tbody tr,
+#meatDataTable tbody tr,
+#marineDataTable tbody tr,
+#all_counterAgents tbody tr,
+#all_consignees tbody tr {
+    cursor: pointer;
+}
+#cosmeticsDataTable tbody tr:hover,
+#meatDataTable tbody tr:hover,
+#marineDataTable tbody tr:hover,
+#all_counterAgents tbody tr:hover,
+#all_consignees tbody tr:hover {
+    background-color: #007bff;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 600px;
+        margin: 1.75rem auto;
+    }
+}

@@ -1,0 +1,244 @@
+<?php
+include '../../library/core.php';
+
+
+
+file_include('/layers/header.php', 'Товары');
+?>
+<link rel="stylesheet" href="<?= url('/assets/css/goods.css'); ?>">
+
+<div class="container-fluid mt-5">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Товары</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row filter pr-3 pl-3 pb-3">
+                        <div class="row mr-3">
+                            <div>
+                                <label>СТРОК</label>
+                                <select name="" id="">
+                                    <option value="5">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Поиск</label><input type="text" id="inputSearch">
+                            </div>
+                        </div>
+
+                        <div class="row p-0 mt-2">
+                            <div>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalAdd">
+                                    Добавить товар
+                                </button>
+
+                                <!-- Modal window of Add button -->
+                                <div class="modal fade" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <!-- Modal header -->
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Добавление
+                                                    товара
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <!-- Modal header -->
+                                            <!-- Modal body -->
+                                            <div class="modal-body add-good">
+                                                <form>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Код :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="productId" autocomplete="off">
+                                                            <div class="invalid-feedback">
+                                                                Такой код уже используется!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Категория :</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="productCategory form-control form-control-lg" id="productCategory" name="productCategory">
+                                                                <option disabled selected>Выберите...</option>
+                                                                <option>Косметика и средства личной гигиены</option>
+                                                                <option>Сухофрукты, снеки, специи</option>
+                                                                <option>Соки и напитки</option>
+                                                                <option>Мясо, колбасы и полуфабрикаты</option>
+                                                                <option>Рыба и морепродукты</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Наименование :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control form-control-lg" id="productName" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Ед. изм-я :</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="productUnit form-control form-control-lg" id="productUnit" name="productUnit">
+                                                                <option disabled selected>Выберите...</option>
+                                                                <option>шт</option>
+                                                                <option>л</option>
+                                                                <option>мл</option>
+                                                                <option>кг</option>
+                                                                <option>г</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Вес :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="productWeight" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Цена, руб. :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="productCost" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                                <button id="btnSave" type="button" class="btn btn-primary">Сохранить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal window of Add button -->
+
+                                <!-- Modal window of Edit button -->
+                                <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <!-- Modal header -->
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Редактирование
+                                                    товара
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <!-- Modal header -->
+                                            <!-- Modal body -->
+                                            <div class="modal-body add-good">
+                                                <form>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Код :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="EditProductId" autocomplete="off" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Категория :</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="EditProductCategory form-control form-control-lg" id="EditProductCategory" name="EditProductCategory">
+                                                                <option disabled selected>Выберите...</option>
+                                                                <option>Косметика и средства личной гигиены</option>
+                                                                <option>Сухофрукты, снеки, специи</option>
+                                                                <option>Соки и напитки</option>
+                                                                <option>Мясо, колбасы и полуфабрикаты</option>
+                                                                <option>Рыба и морепродукты</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Наименование :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control form-control-lg" id="EditProductName" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Ед. изм-я :</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="form-control form-control-lg" id="EditProductUnit">
+                                                                <option disabled selected>Выберите...</option>
+                                                                <option>шт</option>
+                                                                <option>л</option>
+                                                                <option>мл</option>
+                                                                <option>кг</option>
+                                                                <option>г</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Вес :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="EditProductWeight" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Цена, руб. :</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="number" class="form-control form-control-lg" id="EditProductCost" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                                <button id="btnEdit" type="button" class="btn btn-primary">Сохранить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal window of Edit button -->
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered dataTable" id="productDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 59px;">Код</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Категория</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Наименование</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 50px;">Еденицы измерения</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Вес</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 31px;">Цена, руб.</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Опции</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal window from the advanced search -->
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal window from the advanced search -->
+
+<script src="<?= url('/assets/js/goods.js'); ?>"></script>
+
+<?php file_include('/layers/footer.php'); ?>

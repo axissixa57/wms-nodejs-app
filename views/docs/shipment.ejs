@@ -1,0 +1,360 @@
+<?php
+include '../../library/core.php';
+
+file_include('/layers/header.php', 'Задание на сборку');
+?>
+<link rel="stylesheet" href="<?= url('/assets/css/shipment.css'); ?>">
+
+<div class="container-fluid mt-5">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Задание на сборку</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <!-- Шапака сборки -->
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                    <div class="row pt-3">
+
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="shipment.php" method="POST">
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <label for="shipment_id" class="col-form-label col-form-label-lg">Номер :</label>
+                                                <div>
+                                                    <input type="text" class="form-control form-control-lg" id="shipment_id" name="shipment_id" disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="date" class="col-form-label col-form-label-lg">от :</label>
+                                                <div>
+                                                    <input type="text" class="form-control form-control-lg datepicker-here" id="date" name="date" autocomplete="off">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="status" class="col-form-label col-form-label-lg">Статус :</label>
+                                                <div>
+                                                    <select class="status custom-select" id="status" name="status">
+                                                        <option selected>К выполнению</option>
+                                                        <option>Собирается</option>
+                                                        <option>Собрана</option>
+                                                        <option>Проверена</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-4">
+                                                <label for="date_shipment" class="col-form-label col-form-label-lg">Дата отгрузки :</label>
+                                                <div>
+                                                    <input type="text" class="form-control form-control-lg datepicker-here" id="date_shipment" name="date_shipment" autocomplete="off">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Warehouse -->
+                                            <div class="col-md-4">
+                                                <label for="warehouse_id" class="col-form-label col-form-label-lg">Склад :</label>
+                                                <div>
+                                                    <input type="text" class="form-control form-control-lg" id="warehouse_id" data-toggle="modal" data-target="#warehouseModalScrollable" name="warehouse_id" autocomplete="off">
+                                                </div>
+                                                <!-- Modal for CounterAgent -->
+                                                <div class="modal fade" id="warehouseModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-shipment" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Склады</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="card-body">
+                                                                    <div class="col-sm-12 p-0">
+                                                                        <table class="table table-bordered dataTable" id="all_warehouses" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                            <thead>
+                                                                                <tr role="row">
+                                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20px;">№</th>
+                                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 60px;">Адрес</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr role="row">
+                                                                                    <td>33</td>
+                                                                                    <td style="text-align: left;">г. Минск, ул. Рафиева, 27</td>
+                                                                                </tr>
+                                                                                <tr role="row">
+                                                                                    <td>34</td>
+                                                                                    <td style="text-align: left;">г. Минск, пр-т Независимости, 48</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                                                <button id="btnWarehouses" type="button" class="btn btn-primary">Выбрать</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal for warehouse -->
+                                            </div>
+                                            <!-- Warehouse -->
+
+                                            <div class="col-md-4">
+                                                <label for="consignee_id" class="col-form-label col-form-label-lg">Грузополучатель :</label>
+                                                <div>
+                                                    <input type="text" class="form-control form-control-lg" id="consignee_id" name="consignee_id" data-toggle="modal" data-target="#receiverOfGoodsModalScrollable" autocomplete="off">
+                                                </div>
+                                                <!-- Modal for receiverOfGoods -->
+                                                <div class="modal fade" id="receiverOfGoodsModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-shipment" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Грузополучатель</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="card-body">
+                                                                    <div class="col-sm-12 p-0">
+                                                                        <table class="table table-bordered dataTable" id="all_consignees" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                            <thead>
+                                                                                <tr role="row">
+                                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20px;">№</th>
+                                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 60px;">Адрес</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                                                <button id="btnConsignees" type="button" class="btn btn-primary">Выбрать</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal for receiverOfGoods -->
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-0 justify-content-end">
+                                            <input type="submit" class="btn btn-primary mr-3" value="Создать">
+                                            <button type="button" class="btn btn-primary mr-3 bthClose"><a href="<?= url('/web/logs/shipments_log.php'); ?>">Закрыть</a></button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Шапака сборки -->
+
+                <!-- Оповещение сборки -->
+                <div style="position: absolute; top: 5px; right: 5px;">
+
+                    <!-- Then put toasts within -->
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+                        <div class="toast-header">
+                            <strong class="mr-5">WMS</strong>
+                            <small class="text-muted">только что</small>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="toast-body">
+                            Сборка создана!
+                        </div>
+                    </div>
+                </div>
+                <!-- Оповещение сборки -->
+
+                <!-- Таблица сборки -->
+                <div class="container-fluid mt-3 p-0">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row filter pr-3 pl-3 pb-3">
+                                        <div class="row p-0 mt-1">
+                                            <div>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                                    Добавить
+                                                </button>
+
+                                                <button type="button" class="btn btn-primary btnDelete">
+                                                    Удалить
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog listOfGoods modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalCenterTitle">Товары
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <!-- Product selection table -->
+                                                                <div class="accordion" id="accordionExample">
+                                                                    <div class="card">
+                                                                        <div class="card-header d-flex justify-content-between">
+                                                                            <div class="btn"><b>Наименование</b></div>
+                                                                            <div class="btn"><b>Код</b></div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingOne">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    Косметика и средства личной гигиены
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+
+                                                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="cosmeticsDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingTwo">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                    Мясо, колбасы и полуфабрикаты
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="meatDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingThree">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                    Рыба и морепродукты
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="marineDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Product selection table -->
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                                                <button type="button" class="btn btn-primary">Выбрать</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                                <div class="row m-0">
+                                                    <div class="col-sm-12 p-0">
+                                                        <table class="table table-bordered dataTable mainTableOfGoods" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                            <thead>
+                                                                <tr role="row">
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Код товара</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Категория</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Наименование</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Количество</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Ед. изм-ния</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Вес</th>
+                                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Вес, кг.</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pt-3 pb-1">
+                                        <div class="col pr-1 pl-1">
+                                            <label class="h6">Количество мест (поддон)</label>
+                                            <input type="number" class="form-control" id="pallet" value="1">
+                                        </div>
+
+                                        <div class="col pr-1 pl-1">
+                                            <label class="h6">Общий вес, кг.</label>
+                                            <input type="number" class="form-control" id="total_weight" value="0" disabled>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Таблица сборки -->
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="<?= url('/assets/js/shipment.js'); ?>"></script>
+
+<?php file_include('/layers/footer.php') ?>

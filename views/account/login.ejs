@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%- title -%></title>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/auth.css" rel="stylesheet">
+    <script src="/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body class="text-center">
+    <header>
+        <div class="fullscreen-video-wrap">
+            <video src="/video/wms.mp4" autoplay loop type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' muted></video>
+        </div>
+    </header>
+
+    <form class="form-signin">
+        <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+        <label for="inputLogin" class="sr-only">Логин</label>
+        <input type="text" name="login" id="inputLogin" class="form-control" placeholder="Логин" required
+            autofocus autocomplete="off">
+        <div class="pb-1 invalid-feedback invalid-login"></div>
+
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required
+            autocomplete="off">
+        <div class="pb-2 invalid-feedback invalid-password"></div>
+        <button id="enter" class="btn btn-lg btn-primary btn-block" type="button">Войти</button>
+        <p class="mt-3 mb-3">&copy; 2019</p>
+    </form>
+
+    <script src="/scripts/login.js"></script>
+</body>
+
+</html>

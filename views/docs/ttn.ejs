@@ -1,0 +1,445 @@
+<?php
+include '../../library/core.php';
+file_include('/layers/header.php', 'Товарно-транспортная накладная');
+?>
+<link rel="stylesheet" href="<?= url('/assets/css/ttn.css'); ?>">
+
+<!-- Content -->
+<div class="container-fluid mt-5">
+    <div class="card shadow mb-4">
+
+        <!-- Header of content -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Товарно-транспортная накладная</h6>
+        </div>
+        <!-- Header of content -->
+
+        <!-- Body of content -->
+        <div class="card-body">
+            <!-- Page frame -->
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Главная шапка</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Отгрузка</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">WMS</a>
+                </div>
+            </nav>
+            <!-- Page frame -->
+
+            <div class="tab-content" id="nav-tabContent">
+                <!-- Главная шапка -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                    <!-- [Дата - На склад] - [ Блокировка ] -->
+                    <div class="row pt-5">
+                        <!-- [Дата - На склад] -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form name="ttnForm">
+                                        <input type="hidden" name="id" data-id="<?= $_GET['id'] ?>" value="0" />
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="h6">Дата</label>
+                                                <input id="date_ttn" type="text" class="datepicker-here form-control" autocomplete="off" />
+                                                <label class="h6 mt-3">Со склада</label>
+                                                <input id="id_warehouse" type="text" class="form-control" autocomplete="off">
+                                            </div>
+                                            <div class="col">
+                                                <label class="h6">№ документа</label>
+                                                <input id="id_ttn" type="text" class="form-control" autocomplete="off">
+                                                <label class="h6 mt-3">На склад</label>
+                                                <input id="id_consignee" type="text" class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [Дата - На склад] -->
+
+                        <!-- [ Блокировка ] -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <button id="btnCreateDoc" type="button" class="btn btn-primary btn-lg btn-block">Создать документ</button>
+                                    <button id="btnEnter" type="button" class="btn btn-danger btn-lg btn-block">Документ введён</button>
+                                    <a href="<?= url('/web/logs/movements_log.php'); ?>" class="btn btn-secondary btn-lg btn-block">Закрыть</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ Блокировка ] -->
+                    </div>
+                    <!-- [Дата - На склад] - [ Блокировка ] -->
+
+                    <!-- Примечание -->
+                    <div class="row p-3">
+                        <label class="h6">Примечание</label>
+                        <input id="comment" type="text" class="form-control" autocomplete="off">
+                    </div>
+                    <!-- Примечание -->
+
+                    <!-- Таблица заказа -->
+                    <div class="container-fluid mt-3 p-0">
+                        <div class="card shadow mb-4">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                        <div class="row filter pb-3 justify-content-between">
+
+                                            <div>
+                                                <!-- Button trigger modal -->
+                                                <button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                                    Добавить
+                                                </button>
+
+                                                <button id="btnRemove" type="button" class="btn btn-primary btnDelete">
+                                                    Удалить
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog listOfGoods modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalCenterTitle">Товары</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <!-- Product selection table -->
+                                                                <div class="accordion" id="accordionExample">
+                                                                    <div class="card">
+                                                                        <div class="card-header d-flex justify-content-between">
+                                                                            <div class="btn"><b>Наименование</b></div>
+                                                                            <div class="btn"><b>Код</b></div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingOne">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                    Косметика и средства личной гигиены
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+
+                                                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="cosmeticsDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingTwo">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                    Мясо, колбасы и полуфабрикаты
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="meatDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header" id="headingThree">
+                                                                            <h2 class="mb-0">
+                                                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                                    Рыба и морепродукты
+                                                                                </button>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                                            <div class="card-body goods">
+
+                                                                                <div class="col-sm-12 p-0">
+                                                                                    <table class="table table-bordered dataTable" id="marineDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                                                        <tbody></tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Product selection table -->
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                                                <button type="button" class="btn btn-primary">Выбрать</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal -->
+                                            </div>
+
+                                            <div>
+                                                <button id="btnPrint" type="button" class="btn btn-primary">
+                                                    Печать
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row m-0">
+                                            <div class="col-sm-12 p-0">
+                                                <table class="table table-bordered dataTable" id="productsDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Код товара</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Наименование товара</th>
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 59px;">Еденица измерения</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Вес</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Количество</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 50px;">Цена, руб.</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 31px;">Стоимость, руб.</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Масса груза, кг.</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Таблица заказа -->
+
+                </div>
+                <!-- Главная шапка -->
+
+                <!-- Отгрузка -->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="row pt-5">
+                        <!-- Контрагент - Заказчик -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="h6">Контрагент</label>
+                                                <input id="warehouse_address" type="text" class="form-control" data-toggle="modal" data-target="#counterAgentModalScrollable" autocomplete="off">
+                                                <label class="h6 mt-3">Заказчик</label>
+                                                <input id="consignee_address" type="text" class="form-control" data-toggle="modal" data-target="#customerModalScrollable" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Контрагент - Заказчик -->
+
+                        <!-- Modal for CounterAgent -->
+                        <div class="modal fade" id="counterAgentModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-shipment" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Контрагент</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <div class="col-sm-12 p-0">
+                                                <table class="table table-bordered dataTable" id="all_counterAgents" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20px;">№</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 60px;">Адрес</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                        <button id="btnWarehouses" type="button" class="btn btn-primary">Выбрать</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal for CounterAgent -->
+
+                        <!-- Modal for Customer -->
+                        <div class="modal fade" id="customerModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-shipment" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Заказчик</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <div class="col-sm-12 p-0">
+                                                <table class="table table-bordered dataTable" id="all_consignees" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20px;">№</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 60px;">Адрес</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                        <button id="btnConsignees" type="button" class="btn btn-primary">Выбрать</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal for Customer -->
+
+                        <!-- Машина -->
+                        <div class="container-fluid mt-5">
+                            <div class="card shadow mb-4">
+
+                                <!-- Header of content -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Машина
+                                    </h6>
+                                </div>
+                                <!-- Header of content -->
+
+                                <!-- Body of content -->
+                                <div class="card-body">
+
+                                    <!-- Button -->
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <button id="btnCar" type="button" class="btn btn-primary btn-lg btn-block">Взять реквизиты с последней машины</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+
+                                    <!-- Реквизиты машины -->
+                                    <div class="row pt-5">
+
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <form>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <label class="h6">№ Путевого листа</label>
+                                                                <input id="tripTicket" type="text" class="form-control" autocomplete="off" />
+                                                                <label class="h6 mt-3">Организация</label>
+                                                                <input id="organization" type="text" class="form-control" autocomplete="off">
+                                                            </div>
+                                                            <div class="col">
+                                                                <label class="h6">Марка автомобиля, прицепа, полуприцепа</label>
+                                                                <input id="brand" type="text" class="form-control" autocomplete="off">
+                                                                <label class="h6 mt-3">Государственный номер</label>
+                                                                <input id="stateNumber" type="text" class="form-control" autocomplete="off">
+                                                            </div>
+                                                            <div class="col">
+                                                                <label class="h6">Водитель</label>
+                                                                <input id="driverName" type="text" class="form-control" autocomplete="off">
+                                                                <label class="h6 mt-3">Табельный номер</label>
+                                                                <input id="driverId" type="text" class="form-control" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- Реквизиты машины -->
+
+                                </div>
+                                <!-- Body of content -->
+
+                            </div>
+                        </div>
+                        <!-- Машина -->
+                    </div>
+                </div>
+                <!-- Отгрузка -->
+
+                <!-- WMS -->
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="row pt-5">
+                        <!-- Content -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="h6">Код машины</label>
+                                                <input id="codeCar" type="text" class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- Button -->
+                                    <div class="card mt-4">
+                                        <div class="card-body">
+                                            <button id="btnWMS" type="button" class="btn btn-primary btn-lg btn-block">Принять с WMS</button>
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="p-4">
+                                        <input id="add1000" type="checkbox" class="form-check-input" id="dropdownCheck">
+                                        <label class="form-check-label ml-2" for="dropdownCheck">
+                                            Добавить 1000 к номеру склада
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                    </div>
+                </div>
+                <!-- WMS -->
+            </div>
+        </div>
+        <!-- Body of content -->
+    </div>
+</div>
+<!-- Content -->
+
+<script src="<?= url('/assets/js/ttn.js'); ?>"></script>
+
+<?php file_include('/layers/footer.php'); ?>

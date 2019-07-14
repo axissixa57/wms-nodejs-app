@@ -1,0 +1,64 @@
+.status {
+    height: calc(1.5em + .75rem + 15px);
+}
+
+.mainTableOfGoods>tbody>tr:hover,
+.marked {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.bthClose a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#all_warehouses option,
+#all_consignees option {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    padding-left: 10px;
+}
+
+#all_warehouses option:last-child,
+#all_consignees option:last-child {
+    border-bottom: 1px solid black;
+}
+
+#all_warehouses option:nth-child(even),
+#all_consignees option:nth-child(even) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.selected {
+    background-color: #007bff;
+}
+
+#cosmeticsDataTable tbody tr,
+#meatDataTable tbody tr,
+#marineDataTable tbody tr,
+#all_warehouses tbody tr,
+#all_consignees tbody tr {
+    cursor: pointer;
+}
+#cosmeticsDataTable tbody tr:hover,
+#meatDataTable tbody tr:hover,
+#marineDataTable tbody tr:hover,
+#all_warehouses tbody tr:hover,
+#all_consignees tbody tr:hover {
+    background-color: #007bff;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog-shipment {
+        max-width: 600px;
+        margin: 1.75rem auto;
+    }
+
+    .listOfGoods {
+        max-width: 800px;
+        margin: 1.75rem auto;
+    }
+}

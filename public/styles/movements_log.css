@@ -1,0 +1,59 @@
+.filter {
+    justify-content: space-between;
+}
+
+.filter>div>div>label,
+.filter>div>div>input,
+.filter>div>div>select {
+    margin-top: 15px;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.filter>div>div>label {
+    font-weight: bold;
+}
+
+.filter>div>div>select {
+    height: 26px;
+}
+
+.filter>div>div>input,
+.filter>div>div>select {
+    border-radius: 5px;
+}
+
+.filter>div>div>input {
+    border: 1px solid #d1d3e2;
+}
+
+/* table.dataTable>tbody tr:hover {
+    background-color: #007bff;
+} */
+
+.modal-body {
+    text-align: center;
+    font-size: 35px;
+}
+
+.h2 {
+    border-bottom: 3px solid #000;
+}
+
+.order-list {
+    border-bottom: 3px solid #000;
+}
+
+.green-bg {
+    background: #1dd81d;
+}
+.red-bg {
+    background: #ee3f3f;
+}
+
+@media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 1000px;
+    }
+}
