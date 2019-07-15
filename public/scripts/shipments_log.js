@@ -3,7 +3,8 @@ let ROWS = '';
 const btnPrintOrder = document.getElementById('print-order-list');
 btnPrintOrder.addEventListener('click', () => {
     btnPrintOrder.style.display = 'none';
-    window.open('../templates/shipments/shipment.html');
+    // window.open('/templates/shipments/shipment.html');
+    window.open('/templates/shipment');
     setTimeout(() => {
         btnPrintOrder.style.display = 'block';
     }, 0);
@@ -359,7 +360,7 @@ $('#btnShippingList').on('click', () => {
     }
 
     if (req != '') {
-        window.open('/template/shipments?' + req);
+        window.open('/templates/shipping-list?' + req);
     } else {
         alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
     }

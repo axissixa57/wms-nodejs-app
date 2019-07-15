@@ -3,8 +3,6 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import session from 'express-session';
-import htmlPdf from 'html-pdf';
-import ejs from 'ejs';
 
 import { myConfig } from './library/config';
 
@@ -15,6 +13,7 @@ import { docsRouter } from './routes/docsRouter';
 import { logbooksRouter } from './routes/logbooksRouter';
 import { handbooksRouter } from './routes/handbooksRouter';
 import { reportsRouter } from './routes/reportsRouter';
+import { templateRouter } from './routes/templateRouter';
 import { apiRouter } from './routes/apiRouter';
 
 import { User } from './models/User';
@@ -57,6 +56,7 @@ app.use('/docs', docsRouter);
 app.use('/logbooks', logbooksRouter);
 app.use('/reports', reportsRouter);
 app.use('/handbooks', handbooksRouter);
+app.use('/templates', templateRouter);
 app.use('/api', apiRouter);
 
 // 404

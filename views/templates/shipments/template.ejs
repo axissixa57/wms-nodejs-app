@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Печать ТТН</title>
+    <meta charset="utf-8">
+</head>
+<body style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size:10px; padding:20px 40px; margin: 0; line-height:1.5;">
+
+<table cellspacing="0" border="0">
+	<colgroup width="51"></colgroup>
+	<colgroup width="147"></colgroup>
+	<colgroup width="155"></colgroup>
+	<colgroup width="330"></colgroup>
+	<colgroup width="61"></colgroup>
+	<colgroup width="133"></colgroup>
+	<colgroup width="128"></colgroup>
+	<tr>
+		<td colspan=7 rowspan=3 height="60" align="center" valign=bottom><font face="Times New Roman" size=7 color="#000000">Отгрузочный лист</font></td>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td height="20" align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font face="Times New Roman" color="#000000"><br></font></td>
+		<td align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+	<tr>
+		<td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000" height="72" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">№</font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">№ Сборочного листа</font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">Грузополучатель</font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">Адрес грузополучателя </font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">Мест</font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">Масса груза, кг.</font></td>
+		<td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000" align="center" valign=middle><font face="Times New Roman" size=4 color="#000000">Код машины</font></td>
+	</tr>
+
+	<% for(let i = 0; i < shipments.length; i++) {%>
+		<tr>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" height="20" align="left" valign=bottom><font color="#000000"><%=i + 1%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><%=shipments[i]._id%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><%=shipments[i].id_consignee%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><%=shipments[i].consignee[0].address%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><%=shipments[i].pallet%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><%=shipments[i].total_weight%><br></font></td>
+			<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; text-align: center;" align="left" valign=bottom><font color="#000000"><br></font></td>
+		</tr>
+	<%} %>
+
+	<tr>
+		<td style="border-top: 1px solid #000000; border-right: 1px solid #000000" height="20" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+		<td style="border-top: 1px solid #000000; border-left: 1px solid #000000" align="left" valign=bottom><font color="#000000"><br></font></td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,3 +1,78 @@
+(function GetTTN(id) {
+    if (id != '') {
+        $.ajax({
+            url: "/api/ttn/" + id,
+            type: "GET",
+            contentType: "application/json",
+            success: function (ttn) {
+                $('#btnCreateDoc').attr('disabled', 'disabled');
+                let rows = "";
+
+                const products = ttn.products;
+                const quantityProducts = ttn.quantityProducts;
+
+                for (let i = 0; i < products.length; i++) {
+                    if (products[i]._id in quantityProducts) {
+                        products[i].quantity = quantityProducts[products[i]._id];
+                    }
+                }
+
+                $.each(products, function (index, product) {
+                    rows += row(product);
+                });
+
+                $("#productsDataTable tbody").append(rows);
+                if (ttn.doc.status == 'Заблокирован') {
+                    $('#btnEnter').removeClass('btn-danger');
+                    $('#btnEnter').addClass('btn-success');
+
+                    $('input').each((index, inp) => {
+                        $(inp).attr('disabled', 'disabled');
+                    });
+
+                    $('#btnAdd').attr('disabled', 'disabled');
+                    $('#btnRemove').attr('disabled', 'disabled');
+                    $('#btnCar').attr('disabled', 'disabled');
+                    $('#btnWMS').attr('disabled', 'disabled');
+                } else if (ttn.doc.status == 'Разблокирован') {
+                    $('#btnEnter').removeClass('btn-success');
+                    $('#btnEnter').addClass('btn-danger');
+
+                    $('input').each((index, inp) => {
+                        $(inp).removeAttr('disabled', 'disabled');
+                    });
+
+                    $('#btnAdd').removeAttr('disabled', 'disabled');
+                    $('#btnRemove').removeAttr('disabled', 'disabled');
+                    $('#btnCar').removeAttr('disabled', 'disabled');
+                    $('#btnWMS').removeAttr('disabled', 'disabled');
+                }
+
+                $('#id_ttn').val(`${ttn.doc.id_doc}`);
+                $('#date_ttn').val(`${ttn.doc.date}`);
+                $('#id_warehouse').val(`${ttn.doc.id_warehouse}`);
+                $('#id_consignee').val(`${ttn.doc.id_consignee}`);
+                $('#comment').val(`${ttn.doc.comment}`);
+                $('#tripTicket').val(`${ttn.doc.car.id_tripTicket}`);
+                $('#organization').val(`${ttn.doc.car.organization}`);
+                $('#brand').val(`${ttn.doc.car.brand}`);
+                $('#stateNumber').val(`${ttn.doc.car.stateNumber}`);
+                $('#driverName').val(`${ttn.doc.car.driver}`);
+                $('#driverId').val(`${ttn.doc.car.id_driver}`);
+
+                GetWarehouse(ttn.doc.id_warehouse);
+                if (parseInt(ttn.doc.id_consignee) > 10000) {
+                    let id = `${ttn.doc.id_consignee}`.slice(4);
+                    GetConsignee(id);
+                } else {
+                    GetConsignee(ttn.doc.id_consignee);
+                }
+            }
+        });
+    }
+
+})($('input[name=id]').attr('data-id'))
+
 function countCost(input) {
     let cost = 0;
 
@@ -541,81 +616,6 @@ function GetConsignee(id) {
     });
 }
 
-(function GetTTN(id) {
-    if (id != '') {
-        $.ajax({
-            url: "/api/ttn/" + id,
-            type: "GET",
-            contentType: "application/json",
-            success: function (ttn) {
-                $('#btnCreateDoc').attr('disabled', 'disabled');
-                let rows = "";
-
-                const products = ttn.products;
-                const quantityProducts = ttn.quantityProducts;
-
-                for (let i = 0; i < products.length; i++) {
-                    if (products[i]._id in quantityProducts) {
-                        products[i].quantity = quantityProducts[products[i]._id];
-                    }
-                }
-
-                $.each(products, function (index, product) {
-                    rows += row(product);
-                });
-
-                $("#productsDataTable tbody").append(rows);
-                if (ttn.doc.status == 'Заблокирован') {
-                    $('#btnEnter').removeClass('btn-danger');
-                    $('#btnEnter').addClass('btn-success');
-
-                    $('input').each((index, inp) => {
-                        $(inp).attr('disabled', 'disabled');
-                    });
-
-                    $('#btnAdd').attr('disabled', 'disabled');
-                    $('#btnRemove').attr('disabled', 'disabled');
-                    $('#btnCar').attr('disabled', 'disabled');
-                    $('#btnWMS').attr('disabled', 'disabled');
-                } else if (ttn.doc.status == 'Разблокирован') {
-                    $('#btnEnter').removeClass('btn-success');
-                    $('#btnEnter').addClass('btn-danger');
-
-                    $('input').each((index, inp) => {
-                        $(inp).removeAttr('disabled', 'disabled');
-                    });
-
-                    $('#btnAdd').removeAttr('disabled', 'disabled');
-                    $('#btnRemove').removeAttr('disabled', 'disabled');
-                    $('#btnCar').removeAttr('disabled', 'disabled');
-                    $('#btnWMS').removeAttr('disabled', 'disabled');
-                }
-
-                $('#id_ttn').val(`${ttn.doc.id_doc}`);
-                $('#date_ttn').val(`${ttn.doc.date}`);
-                $('#id_warehouse').val(`${ttn.doc.id_warehouse}`);
-                $('#id_consignee').val(`${ttn.doc.id_consignee}`);
-                $('#comment').val(`${ttn.doc.comment}`);
-                $('#tripTicket').val(`${ttn.doc.car.id_tripTicket}`);
-                $('#organization').val(`${ttn.doc.car.organization}`);
-                $('#brand').val(`${ttn.doc.car.brand}`);
-                $('#stateNumber').val(`${ttn.doc.car.stateNumber}`);
-                $('#driverName').val(`${ttn.doc.car.driver}`);
-                $('#driverId').val(`${ttn.doc.car.id_driver}`);
-
-                GetWarehouse(ttn.doc.id_warehouse);
-                if (parseInt(ttn.doc.id_consignee) > 10000) {
-                    let id = `${ttn.doc.id_consignee}`.slice(4);
-                    GetConsignee(id);
-                } else {
-                    GetConsignee(ttn.doc.id_consignee);
-                }
-            }
-        });
-    }
-
-})($('input[name=id]').attr('data-id'))
-
 function MinusProductQuantityOfWarehouse(docWarehouseId, docProducts) {
     $.ajax({
         url: "/api/warehouse/quantity",
@@ -646,8 +646,9 @@ function EditProductQuantityOfWarehouse(docWarehouseId, docProducts) {
 }
 
 $('#btnPrint').click(() => {
-    const id = $('input[name=id]').attr('data-id');
-    window.open('/template/ttn/' + id);
+    const id = $('input[name=id]').attr('data-id') || $('input[name=id]').val();
+    if (id == '0') return alert('Сначала создайте документ.');
+    window.open('/templates/ttn/' + id);
 });
 
 function GetLastTTN() {

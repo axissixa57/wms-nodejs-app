@@ -19,7 +19,7 @@ apiRouter.get("/shipments", apiController.getShipments);
 apiRouter.get("/shipments/codecar/:id", apiController.getProductsFromShipmentsByCodeCar);
 apiRouter.get("/shipment/:id/products", apiController.getProductsFromShipment);
 apiRouter.put("/shipments", apiController.updateStatusOfShipments);
-apiRouter.put("/shipment", apiController.updateShipmentStatus); 
+apiRouter.put("/shipment", apiController.updateShipmentStatus);
 apiRouter.delete("/shipments/:id", apiController.deleteShipment);
 
 apiRouter.get("/consignees", apiController.getConsignees);
@@ -41,12 +41,12 @@ apiRouter.delete("/warehouses/:id", apiController.deleteWarehouse);
 
 apiRouter.post("/shipmentstottn", apiController.createShipmentsToTTN);
 
-apiRouter.get("/ttns", apiController.getTTNs);
-apiRouter.get("/ttns/last", apiController.getLastAddedTTN);
 apiRouter.get("/ttn/:id", apiController.getTTNwithProducts);
-apiRouter.post("/ttn", apiController.getTTNs);
+apiRouter.post("/ttn", apiController.createTTN);
 apiRouter.put("/ttn", apiController.updateTTN);
 apiRouter.delete("/ttn/:id", apiController.deleteTTN);
+apiRouter.get("/ttns", apiController.getTTNs);
+apiRouter.get("/ttns/last", apiController.getLastAddedTTN);
 
 apiRouter.get("/remainders", apiController.getRemainders);
 
