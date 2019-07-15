@@ -23,7 +23,7 @@ function row(ttn) {
                             Действие
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item openLink" href="http://wms.com/web/docs/ttn.php?id=${ttn._id}">Открыть</a> 
+                            <a class="dropdown-item openLink" href="/docs/ttn?id=${ttn._id}">Открыть</a> 
                             <a class="dropdown-item removeLink" href="#" data-id="${ttn._id}">Удалить</a>
                         </div>
                     </div>
