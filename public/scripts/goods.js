@@ -24,7 +24,7 @@ function row(product) {
 
 function GetProduct(id) {
     $.ajax({
-        url: "http://localhost:3000/api/products/" + id,
+        url: "/api/products/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (product) {
@@ -40,7 +40,7 @@ function GetProduct(id) {
 
 (function GetProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products",
+        url: "/api/products",
         type: "GET",
         contentType: "application/json",
         success: function (products) {
@@ -66,7 +66,7 @@ function GetProduct(id) {
 
 function CreateProduct(productID, productCategory, productName, productUnit, productWeight, productCost) {
     $.ajax({
-        url: "http://localhost:3000/api/products",
+        url: "/api/products",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -90,7 +90,7 @@ function CreateProduct(productID, productCategory, productName, productUnit, pro
 
 function EditProduct(productID, productCategory, productName, productUnit, productWeight, productCost) {
     $.ajax({
-        url: "http://localhost:3000/api/products",
+        url: "/api/products",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -106,7 +106,7 @@ function EditProduct(productID, productCategory, productName, productUnit, produ
 
 function DeleteProduct(id) {
     $.ajax({
-        url: "http://localhost:3000/api/products/" + id,
+        url: "/api/products/" + id,
         contentType: "application/json",
         method: "DELETE",
         success: function (product) {

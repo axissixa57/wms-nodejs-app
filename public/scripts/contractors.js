@@ -35,7 +35,7 @@ function validatePhoneNumber(input) {
 
 function GetContractor(id) {
     $.ajax({
-        url: "http://localhost:3000/api/consignees/" + id,
+        url: "/api/consignees/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (contractor) {
@@ -48,7 +48,7 @@ function GetContractor(id) {
 
 (function GetContractors() {
     $.ajax({
-        url: "http://localhost:3000/api/consignees",
+        url: "/api/consignees",
         type: "GET",
         contentType: "application/json",
         success: function (contractors) {
@@ -74,7 +74,7 @@ function GetContractor(id) {
 
 function CreateContractor(contractorID, contractorAddress, contractorPhone) {
     $.ajax({
-        url: "http://localhost:3000/api/consignees",
+        url: "/api/consignees",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -95,7 +95,7 @@ function CreateContractor(contractorID, contractorAddress, contractorPhone) {
 
 function EditContractor(contractorID, contractorAddress, contractorPhone) {
     $.ajax({
-        url: "http://localhost:3000/api/consignees",
+        url: "/api/consignees",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -111,7 +111,7 @@ function EditContractor(contractorID, contractorAddress, contractorPhone) {
 
 function DeleteContractor(id) {
     $.ajax({
-        url: "http://localhost:3000/api/consignees/" + id,
+        url: "/api/consignees/" + id,
         contentType: "application/json",
         method: "DELETE",
         success: function (contractor) {

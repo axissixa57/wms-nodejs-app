@@ -33,7 +33,7 @@ function row(ttn) {
 
 (function GetTTNs() {
     $.ajax({
-        url: "http://localhost:3000/api/ttns",
+        url: "/api/ttns",
         type: "GET",
         contentType: "application/json",
         success: function(ttns) {
@@ -59,7 +59,7 @@ function row(ttn) {
 
 function DeleteTTN(id) {
     $.ajax({
-        url: "http://localhost:3000/api/ttn/" + id,
+        url: "/api/ttn/" + id,
         contentType: "application/json",
         method: "DELETE",
         success: function(ttn) {
@@ -71,7 +71,7 @@ function DeleteTTN(id) {
 
 function PlusProductQuantityOfWarehouse(docWarehouseID, docProducts) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouse/return",
+        url: "/api/warehouse/return",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({

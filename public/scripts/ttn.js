@@ -44,14 +44,14 @@ async function CheckProducts(docWarehouseId, docProducts) {
 
     docProducts.map(product => params += `idProduct=${product.id}&`)
 
-    const response = await fetch(`http://localhost:3000/api/warehouses/products?${params}`);
+    const response = await fetch(`/api/warehouses/products?${params}`);
     const json = await response.json();
     return json;
 }
 
 function GetProducts(codeCar) {
     $.ajax({
-        url: `http://localhost:3000/api/shipments/codecar/${codeCar}`,
+        url: `/api/shipments/codecar/${codeCar}`,
         type: "GET",
         contentType: "application/json",
         success: function (object) {
@@ -81,7 +81,7 @@ function CreateTTN(docId, docDate, docIdWarehouse, docIdConsignee, docComment,
     docCarTripTicketId, docCarOrganization, docCarBrand, docCarStateNumber,
     docCarDriverName, docCarDriverId, docProducts, docCodeCar, docTotalWeight, docTotalCost, docStatus) {
     $.ajax({
-        url: "http://localhost:3000/api/ttn",
+        url: "/api/ttn",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -146,7 +146,7 @@ $('#btnCreateDoc').click(async () => {
     }
 
     if (docWarehouseId.length > 0 && docProducts.length > 0) {
-        const isThereWarehouse = await fetch('http://localhost:3000/api/warehouses/' + docWarehouseId).then(res => res.json()).catch(err => 'No');
+        const isThereWarehouse = await fetch('/api/warehouses/' + docWarehouseId).then(res => res.json()).catch(err => 'No');
 
         const areThereProductsInWarehouse = await CheckProducts(docWarehouseId, docProducts);
 
@@ -211,7 +211,7 @@ function rowForReference(obj) {
 
 (function GetWarehouses() {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses",
+        url: "/api/warehouses",
         type: "GET",
         contentType: "application/json",
         success: function (warehouses) {
@@ -233,7 +233,7 @@ function rowForReference(obj) {
 
 (function GetConsignees() {
     $.ajax({
-        url: "http://localhost:3000/api/consignees",
+        url: "/api/consignees",
         type: "GET",
         contentType: "application/json",
         success: function (consignees) {
@@ -274,7 +274,7 @@ function rowForProductCategoryTable(product) {
 
 function GetProduct(id) {
     $.ajax({
-        url: "http://localhost:3000/api/products/" + id,
+        url: "/api/products/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (product) {
@@ -285,7 +285,7 @@ function GetProduct(id) {
 
 (function GetCosmeticProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/cosmetics",
+        url: "/api/products/cosmetics",
         type: "GET",
         contentType: "application/json",
         success: function (products) {
@@ -310,7 +310,7 @@ function GetProduct(id) {
 
 (function GetMeatProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/meat",
+        url: "/api/products/meat",
         type: "GET",
         contentType: "application/json",
         success: function (products) {
@@ -334,7 +334,7 @@ function GetProduct(id) {
 
 (function GetMarineProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/marine",
+        url: "/api/products/marine",
         type: "GET",
         contentType: "application/json",
         success: function (products) {
@@ -418,7 +418,7 @@ function EditTTN(id, docId, docDate, docIdWarehouse, docIdConsignee, docComment,
     docCarTripTicketId, docCarOrganization, docCarBrand, docCarStateNumber,
     docCarDriverName, docCarDriverId, docProducts, docCodeCar, docTotalWeight, docTotalCost, docStatus) {
     $.ajax({
-        url: "http://localhost:3000/api/ttn",
+        url: "/api/ttn",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -521,7 +521,7 @@ $('#btnEnter').click(() => {
 
 function GetWarehouse(id) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses/" + id,
+        url: "/api/warehouses/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (warehouse) {
@@ -532,7 +532,7 @@ function GetWarehouse(id) {
 
 function GetConsignee(id) {
     $.ajax({
-        url: "http://localhost:3000/api/consignees/" + id,
+        url: "/api/consignees/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (consignee) {
@@ -544,7 +544,7 @@ function GetConsignee(id) {
 (function GetTTN(id) {
     if (id != '') {
         $.ajax({
-            url: "http://localhost:3000/api/ttn/" + id,
+            url: "/api/ttn/" + id,
             type: "GET",
             contentType: "application/json",
             success: function (ttn) {
@@ -618,7 +618,7 @@ function GetConsignee(id) {
 
 function MinusProductQuantityOfWarehouse(docWarehouseId, docProducts) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouse/quantity",
+        url: "/api/warehouse/quantity",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -635,7 +635,7 @@ function MinusProductQuantityOfWarehouse(docWarehouseId, docProducts) {
 
 function EditProductQuantityOfWarehouse(docWarehouseId, docProducts) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouse/editquantity",
+        url: "/api/warehouse/editquantity",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -647,12 +647,12 @@ function EditProductQuantityOfWarehouse(docWarehouseId, docProducts) {
 
 $('#btnPrint').click(() => {
     const id = $('input[name=id]').attr('data-id');
-    window.open('http://localhost:3000/template/ttn/' + id);
+    window.open('/template/ttn/' + id);
 });
 
 function GetLastTTN() {
     $.ajax({
-        url: "http://localhost:3000/api/ttns/last",
+        url: "/api/ttns/last",
         type: "GET",
         contentType: "application/json",
         success: function (ttn) {

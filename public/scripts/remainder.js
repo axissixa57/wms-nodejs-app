@@ -24,7 +24,7 @@ function row(warehouseInfo) {
 
 (function GetRemainders() {
     $.ajax({
-        url: "http://localhost:3000/api/remainders",
+        url: "/api/remainders",
         type: "GET",
         contentType: "application/json",
         success: function (remainders) {

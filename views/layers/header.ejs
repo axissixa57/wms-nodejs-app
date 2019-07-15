@@ -36,9 +36,9 @@
                         <i class="fas fa-newspaper mr-2"></i>Журналы
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/logs/shipments_log.php">Журнал сборок на отгрузку</a>
+                        <a class="dropdown-item" href="/logbooks/shipments">Журнал сборок на отгрузку</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logs/movements_log">Журнал перемещений</a>
+                        <a class="dropdown-item" href="/logbooks/movements">Журнал перемещений</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -47,11 +47,11 @@
                         <i class="fas fa-book mr-2"></i>Справочники
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/handbook/goods">Товары</a>
+                        <a class="dropdown-item" href="/handbooks/goods">Товары</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/handbook/warehouses">Склады</a>
+                        <a class="dropdown-item" href="/handbooks/warehouses">Склады</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/handbook/contractors">Контрагенты</a>
+                        <a class="dropdown-item" href="/handbooks/contractors">Контрагенты</a>
                     </div>
                 </li>
             </ul>
@@ -62,7 +62,7 @@
                         <i class="fas fa-user-tie mr-2"></i><%- name %>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mb-2">
-                        <% if (role == 'admin') { %>
+                        <% if (role === 'admin') { %>
                             <button class="dropdown-item" type="button"><a class="registry"
                                     href="/registration">Регистрация</a></button>
                             <div class="dropdown-divider"></div>

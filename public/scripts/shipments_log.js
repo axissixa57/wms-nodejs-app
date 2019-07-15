@@ -111,7 +111,7 @@ function markShipmentsAndSelectShipment() {
 
 (function GetShipments() {
     $.ajax({
-        url: "http://localhost:3000/api/shipments",
+        url: "/api/shipments",
         type: "GET",
         contentType: "application/json",
         success: function(shipments) {
@@ -175,20 +175,20 @@ function getId() {
 }
 
 async function GetConsignee(id) {
-    const response = await fetch(`http://localhost:3000/api/consignees/${id}`);
+    const response = await fetch(`/api/consignees/${id}`);
     const consignee = await response.json();
     return consignee;
 }
 
 async function GetWarehouse(id) {
-    const response = await fetch(`http://localhost:3000/api/warehouses/${id}`);
+    const response = await fetch(`/api/warehouses/${id}`);
     const warehouse = await response.json();
     return warehouse;
 }
 
 function GetShipmentProducts(id, shipment) {
     $.ajax({
-        url: `http://localhost:3000/api/shipment/${id}/products`,
+        url: `/api/shipment/${id}/products`,
         type: "GET",
         contentType: "application/json",
         success: async function(products) {
@@ -209,7 +209,7 @@ function GetShipmentProducts(id, shipment) {
 
 function GetShipment(id) {
     $.ajax({
-        url: "http://localhost:3000/api/shipments/" + id,
+        url: "/api/shipments/" + id,
         type: "GET",
         contentType: "application/json",
         success: function(shipment) {
@@ -224,7 +224,7 @@ $('#btnSelected').click(() => {
 
 function UpdateShipmentStatus(shipmentIds, status) {
     $.ajax({
-        url: "http://localhost:3000/api/shipments",
+        url: "/api/shipments",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -256,7 +256,7 @@ $('#btnCreate').click(() => {
 
 function CreateShipmentToTTN(id, shipment_ids) {
     $.ajax({
-        url: "http://localhost:3000/api/shipmentstottn",
+        url: "/api/shipmentstottn",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -271,7 +271,7 @@ function CreateShipmentToTTN(id, shipment_ids) {
 
 function ChangeStatus(id, status) {
     $.ajax({
-        url: "http://localhost:3000/api/shipment",
+        url: "/api/shipment",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -283,7 +283,7 @@ function ChangeStatus(id, status) {
 
 function DeleteShipment(id) {
     $.ajax({
-        url: "http://localhost:3000/api/shipments/" + id,
+        url: "/api/shipments/" + id,
         contentType: "application/json",
         method: "DELETE",
         success: function(shipment) {
@@ -359,7 +359,7 @@ $('#btnShippingList').on('click', () => {
     }
 
     if (req != '') {
-        window.open('http://localhost:3000/template/shipments?' + req);
+        window.open('/template/shipments?' + req);
     } else {
         alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
     }

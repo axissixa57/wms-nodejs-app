@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+    <%- include ../layers/head -%>
+    <link rel="stylesheet" href="/styles/movements_log.css">
+    <body>
+        <%- include ../layers/header -%>
+
+        <div class="container-fluid mt-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Журнал перемещений</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row filter pr-3 pl-3 pb-3">
+                                <div class="row mr-3">
+                                    <div>
+                                        <label>СТРОК</label>
+                                        <select name="" id="">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>С</label><input id="startDate" type="text" class="datepicker-here" />
+                                    </div>
+                                    <div>
+                                        <label>ПО</label><input id="finishDate" type="text" class="datepicker-here" />
+                                    </div>
+                                    <div>
+                                        <label>ОТКУДА</label><input type="text" id="from">
+                                    </div>
+                                    <div>
+                                        <label>КУДА</label><input type="text" id="to">
+                                    </div>
+                                    <div>
+                                        <label>№ ДОКУМЕНТА</label><input type="text" id="doc">
+                                    </div>
+                                </div>
+                                
+                                <div class="row p-0 mt-1">
+                                    <button id="btnSearch" type="button" class="btn btn-primary mt-2">
+                                        Поиск по дате
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered dataTable" id="ttnsDataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">№</th>
+                                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 59px;">Дата</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">№ Склада</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Куда</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 50px;">№ ТТН</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 31px;">Стоимость, руб.</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Вес</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Статус</th>
+                                                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Опции</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/bootstrap/dist/js/bootstrap.min.js"></script> 
+        <script src="/air-datepicker/dist/js/datepicker.min.js"></script>
+        <script src="/scripts/movements_log.js"></script>
+    </body>
+</html>
+

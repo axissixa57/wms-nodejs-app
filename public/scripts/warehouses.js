@@ -39,7 +39,7 @@ function validatePhoneNumber(input) {
 
 function GetWarehouse(id) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses/" + id,
+        url: "/api/warehouses/" + id,
         type: "GET",
         contentType: "application/json",
         success: function (warehouse) {
@@ -52,7 +52,7 @@ function GetWarehouse(id) {
 
 (function GetWarehouses() {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses",
+        url: "/api/warehouses",
         type: "GET",
         contentType: "application/json",
         success: function (warehouses) {
@@ -79,7 +79,7 @@ function GetWarehouse(id) {
 
 function CreateWarehouse(warehouseID, warehouseAddress, warehousePhone) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses",
+        url: "/api/warehouses",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -100,7 +100,7 @@ function CreateWarehouse(warehouseID, warehouseAddress, warehousePhone) {
 
 function EditWarehouse(warehouseID, warehouseAddress, warehousePhone) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses",
+        url: "/api/warehouses",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -113,7 +113,7 @@ function EditWarehouse(warehouseID, warehouseAddress, warehousePhone) {
 
 function DeleteWarehouse(id) {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses/" + id,
+        url: "/api/warehouses/" + id,
         contentType: "application/json",
         method: "DELETE",
         success: function (warehouse) {

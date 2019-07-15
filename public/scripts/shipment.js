@@ -37,7 +37,7 @@ function toColorizeSelectedPositionAndChooseValue(optionsAll, inputResult, btnCh
 
 function GetProduct(id) {
     $.ajax({
-        url: "http://localhost:3000/api/products/" + id,
+        url: "/api/products/" + id,
         type: "GET",
         contentType: "application/json",
         success: function(product) {
@@ -140,7 +140,7 @@ inputShipmentId.value = Math.floor(new Date().getTime() / 100 - 15500000000);
 
 function CreateShipment(shipmentID, date, status, warehouseID, dateShipment, consigneeID, products, pallet, total_weight) {
     $.ajax({
-        url: "http://localhost:3000/api/shipments",
+        url: "/api/shipments",
         contentType: "application/json",
         method: "POST",
         data: JSON.stringify({
@@ -193,7 +193,7 @@ $("form").submit(function(e) {
 
 (function GetConsignees() {
     $.ajax({
-        url: "http://localhost:3000/api/consignees",
+        url: "/api/consignees",
         type: "GET",
         contentType: "application/json",
         success: function(consignees) {
@@ -217,7 +217,7 @@ $("form").submit(function(e) {
 
 (function GetWarehouses() {
     $.ajax({
-        url: "http://localhost:3000/api/warehouses",
+        url: "/api/warehouses",
         type: "GET",
         contentType: "application/json",
         success: function(warehouses) {
@@ -246,7 +246,7 @@ function rowForProductCategoryTable(product) {
 
 (function GetCosmeticProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/cosmetics",
+        url: "/api/products/cosmetics",
         type: "GET",
         contentType: "application/json",
         success: function(products) {
@@ -271,7 +271,7 @@ function rowForProductCategoryTable(product) {
 
 (function GetMeatProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/meat",
+        url: "/api/products/meat",
         type: "GET",
         contentType: "application/json",
         success: function(products) {
@@ -295,7 +295,7 @@ function rowForProductCategoryTable(product) {
 
 (function GetMarineProducts() {
     $.ajax({
-        url: "http://localhost:3000/api/products/marine",
+        url: "/api/products/marine",
         type: "GET",
         contentType: "application/json",
         success: function(products) {
