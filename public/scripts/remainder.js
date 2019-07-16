@@ -41,8 +41,6 @@ function row(warehouseInfo) {
                 }
             }
 
-            console.log(warehousesInfo);
-
             let trs = "";
             $.each(warehousesInfo, function (index, warehouseInfo) {
                 trs += row(warehouseInfo);

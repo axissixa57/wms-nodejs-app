@@ -162,7 +162,7 @@ $('#inputSearch').on('input', () => {
 
     for (const row of ROWS) {
 
-        for (let i = 1; i < row.children.length - 1; i++) {
+        for (let i = 1; i < row.children.length; i++) {
             if (row.children[i].innerHTML.search(value) != -1) {
                 trs += row.outerHTML;
                 break;

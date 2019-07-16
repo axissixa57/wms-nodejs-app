@@ -1,7 +1,9 @@
 let ROWS = '';
+let lineNumber = 0;
 
 function row(product) {
     return `<tr role="row" data-rowid="${product._id}">
+                <td>${++lineNumber}</td>
                 <td>${product._id}</td>
                 <td>${product.category}</td> 
                 <td>${product.name}</td> 
@@ -143,7 +145,7 @@ $('#inputSearch').on('input', () => {
 
     for (const row of ROWS) {
 
-        for (let i = 0; i < row.children.length - 1; i++) {
+        for (let i = 1; i < row.children.length; i++) {
             if (row.children[i].innerHTML.search(value) != -1) {
                 trs += row.outerHTML;
                 break;
