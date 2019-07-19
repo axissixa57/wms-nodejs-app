@@ -284,6 +284,7 @@ export function updateShipmentStatus(req, res) {
         { $set: { status: shipmentStatus } },
         function (err, result) {
             console.log(result);
+            res.send(result)
         }
     );
 };

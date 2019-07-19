@@ -1,3 +1,5 @@
+import { access } from '../library/helpers'
+
 export function getLogbookShipmentsPage(req, res) {
     const { user } = res.locals;
 
@@ -9,11 +11,5 @@ export function getLogbookShipmentsPage(req, res) {
 };
 
 export function getLogbookMovementsPage(req, res) {
-    const { user } = res.locals;
-
-    res.render('logbooks/movements.ejs', {
-        title: "Журнал перемещений",
-        name: user.fullName,
-        role: user.role
-    });
+    access(res, ['admin', 'economist'], 'logbooks/movements.ejs', 'Журнал перемещений');
 };

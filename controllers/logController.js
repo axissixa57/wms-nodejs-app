@@ -11,17 +11,6 @@ export function getLoginPage(req, res) {
 export async function postDataFromLoginPage(req, res) {
     const { login, password } = req.body
 
-    // if (login && password) {
-    //     const [user] = await User.find({ login: login });
-
-    //     if (user) {
-    //         req.session.userId = user._id;
-    //         return res.redirect('/main');
-    //     }
-
-    //     return res.redirect('/');
-    // }
-
     try {
         const users = await User.find({ login: login });
         if (users.length > 0) {

@@ -1,9 +1,5 @@
-export function getMainPage(req, res) {
-    const { user } = res.locals;
+import { access } from '../library/helpers'
 
-    res.render('main.ejs', {
-        title: "Главная",
-        name: user.fullName,
-        role: user.role
-    });
+export function getMainPage(req, res) {
+    access(res, ['admin', 'logist', 'checker', 'economist'], 'main.ejs', 'Главная');
 };

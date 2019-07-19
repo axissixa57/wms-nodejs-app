@@ -1,20 +1,8 @@
 import { User } from '../models/User';
+import { access } from '../library/helpers'
 
 export function getRegistrationPage(req, res) {
-    const { user } = res.locals
-    if (user) {
-        if (user.role == 'admin') {
-            res.render('account/registration.ejs', {
-                title: 'Регистрация нового пользователя',
-                name: user.fullName,
-                role: user.role,
-            });
-        } else {
-            res.status(403).send('У вас нет прав к этой странице.');
-        }
-    } else {
-        res.redirect('/');
-    }
+    access(res, ['admin'], 'account/registration.ejs', 'Регистрация нового пользователя');
 };
 
 export function postDataFromRegistrationPage(req, res) {

@@ -1,9 +1,5 @@
-export function getRemainderPage(req, res) {
-    const { user } = res.locals;
+import { access } from '../library/helpers'
 
-    res.render('reports/remainder.ejs', {
-        title: "Остатки товаров на складах",
-        name: user.fullName,
-        role: user.role
-    });
+export function getRemainderPage(req, res) {
+    access(res, ['admin', 'economist'], 'reports/remainder.ejs', 'Остатки товаров на складах');
 };

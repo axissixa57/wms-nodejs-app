@@ -10,26 +10,34 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/main"><i class="fas fa-home mr-2"></i>Главная</a>
                 </li>
+                <% if (role === 'admin' || role === 'economist' || role === 'logist') { %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-folder-open mr-2"></i>Документы
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <% if (role === 'admin' || role === 'economist') { %>
                         <a class="dropdown-item" href="/docs/ttn">Товарно-транспортная накладная (ТТН)</a>
                         <div class="dropdown-divider"></div>
+                    <% } %>
+                    <% if (role === 'admin' || role === 'logist') { %>
                         <a class="dropdown-item" href="/docs/shipment">Задание на сборку</a>
+                    <% } %>
                     </div>
+                <% } %>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-file mr-2"></i>Отчёты
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/reports/remainder">Остатки товаров на складах</a>
-                    </div>
-                </li>
+                <% if (role === 'admin' || role === 'economist') { %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-file mr-2"></i>Отчёты
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/reports/remainder">Остатки товаров на складах</a>
+                        </div>
+                    </li>
+                <% } %>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -37,8 +45,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/logbooks/shipments">Журнал сборок на отгрузку</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logbooks/movements">Журнал перемещений</a>
+                        <% if (role === 'admin' || role === 'economist') { %>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logbooks/movements">Журнал перемещений</a>
+                        <% } %>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

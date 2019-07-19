@@ -1,21 +1,11 @@
+import { access } from '../library/helpers'
+
 export function getTtnPage(req, res) {
-    const { user } = res.locals;
     const ttnID = req.query.id;
 
-    res.render('docs/ttn.ejs', {
-        title: "Товарно-транспортная накладная",
-        name: user.fullName,
-        role: user.role,
-        ttnID: ttnID
-    });
+    access(res, ['admin', 'economist'], 'docs/ttn.ejs', 'Товарно-транспортная накладная', { ttnID });
 };
 
 export function getShipmentPage(req, res) {
-    const { user } = res.locals;
-
-    res.render('docs/shipment.ejs', {
-        title: "Задание на сборку",
-        name: user.fullName,
-        role: user.role
-    });
+    access(res, ['admin', 'logist', 'checker'], 'docs/shipment.ejs', 'Задание на сборку');
 };
