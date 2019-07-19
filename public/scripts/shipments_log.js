@@ -115,9 +115,9 @@ function markShipmentsAndSelectShipment() {
         url: "/api/shipments",
         type: "GET",
         contentType: "application/json",
-        success: function(shipments) {
+        success: function (shipments) {
             let rows = "";
-            $.each(shipments, function(index, shipment) {
+            $.each(shipments, function (index, shipment) {
                 rows += row(shipment);
             });
 
@@ -126,7 +126,7 @@ function markShipmentsAndSelectShipment() {
 
             markShipmentsAndSelectShipment();
 
-            $("body").on("click", ".removeLink", function() {
+            $("body").on("click", ".removeLink", function () {
                 const id = $(this).data("id");
                 DeleteShipment(id);
             })
@@ -192,13 +192,13 @@ function GetShipmentProducts(id, shipment) {
         url: `/api/shipment/${id}/products`,
         type: "GET",
         contentType: "application/json",
-        success: async function(products) {
+        success: async function (products) {
             const warehouse = await GetWarehouse(shipment.id_warehouse);
             const consignee = await GetConsignee(shipment.id_consignee);
             let rows = '';
             const ps = shipmentTitle(shipment, consignee);
 
-            $.each(products, function(index, product) {
+            $.each(products, function (index, product) {
                 rows += rowForShipmentDataTable(product, shipment, warehouse);
             });
 
@@ -208,15 +208,33 @@ function GetShipmentProducts(id, shipment) {
     });
 }
 
-function GetShipment(id) {
-    $.ajax({
-        url: "/api/shipments/" + id,
-        type: "GET",
-        contentType: "application/json",
-        success: function(shipment) {
-            GetShipmentProducts(shipment._id, shipment);
-        }
-    });
+async function GetShipment(id) {
+    // $.ajax({
+    //     url: "/api/shipments/" + id,
+    //     type: "GET",
+    //     contentType: "application/json",
+    //     success: function (shipment) {
+    //         GetShipmentProducts(shipment._id, shipment);
+    //     }
+    // });
+
+    const shipment = await fetch(`/api/shipments/${id}`).then(res => res.json());
+
+    if (shipment) {
+        const shipmentProducts = await fetch(`/api/shipment/${shipment._id}/products`).then(res => res.json());
+        const warehouse = await GetWarehouse(shipment.id_warehouse);
+        const consignee = await GetConsignee(shipment.id_consignee);
+
+        let rows = '';
+        const title = shipmentTitle(shipment, consignee);
+
+        $.each(shipmentProducts, function (index, product) {
+            rows += rowForShipmentDataTable(product, shipment, warehouse);
+        });
+
+        $(".shipment_title").append(title);
+        $("#shipmentDataTable tbody").append(rows);
+    }
 }
 
 $('#btnSelected').click(() => {
@@ -264,7 +282,7 @@ function CreateShipmentToTTN(id, shipment_ids) {
             id: id,
             shipments: shipment_ids,
         }),
-        success: function(result) {
+        success: function (result) {
             console.log(result);
         },
     })
@@ -287,7 +305,7 @@ function DeleteShipment(id) {
         url: "/api/shipments/" + id,
         contentType: "application/json",
         method: "DELETE",
-        success: function(shipment) {
+        success: function (shipment) {
             $(`tr[data-rowid="${shipment._id}"]`).remove();
         }
     })
@@ -360,7 +378,7 @@ $('#btnShippingList').on('click', () => {
     }
 
     if (req != '') {
-        window.open('/templates/shipping-list?' + req);
+        window.open(`/templates/shipping-list.pdf?${req}`);
     } else {
         alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
     }

@@ -161,39 +161,86 @@ export function createShipment(req, res) {
     });
 };
 
-export function getProductsFromShipmentsByCodeCar(req, res) {
+export async function getProductsFromShipmentsByCodeCar(req, res) {
     const id = req.params.id;
-    ShipmentsToTTN.findOne({ _id: id }, function (err, shipmentsToTtn) {
-        if (err) return console.log(err);
-    }).then((shipmentsToTtn) => {
 
-        Shipment.find({ _id: { $in: shipmentsToTtn.shipments } }, function (err, shipments) {
-            if (err) return console.log(err);
-        }).then(shipments => {
-            const idsProducts = [];
-            const quantityProducts = {};
+    try {
+        const shipmentsToTtn = await ShipmentsToTTN.findOne({ _id: id });
+        // console.log(shipmentsToTtn);
+        const shipments = await Shipment.find({ _id: { $in: shipmentsToTtn.shipments } });
+        // console.log(shipments);
 
-            for (let i = 0; i < shipments.length; i++) {
-                for (let j = 0; j < shipments[i].products.length; j++) {
-                    idsProducts.push(shipments[i].products[j].id);
+        const idsProducts = [];
+        const quantityProducts = {};
 
-                    quantityProducts[shipments[i].products[j].id] = quantityProducts[shipments[i].products[j].id] ?
-                        quantityProducts[shipments[i].products[j].id] + parseInt(shipments[i].products[j].quantity) :
-                        parseInt(shipments[i].products[j].quantity);
-                }
+        for (let i = 0; i < shipments.length; i++) {
+            for (let j = 0; j < shipments[i].products.length; j++) {
+                idsProducts.push(parseInt(shipments[i].products[j].id));
+
+                quantityProducts[shipments[i].products[j].id] = quantityProducts[shipments[i].products[j].id] ?
+                    quantityProducts[shipments[i].products[j].id] + parseInt(shipments[i].products[j].quantity) :
+                    parseInt(shipments[i].products[j].quantity);
             }
+        }
+        console.log(idsProducts);
+        const products = await Product.find({ _id: { $in: idsProducts } });
+        res.send({ products, quantityProducts });
+    } catch (err) {
+        console.log(`Ошибка: ${err}`);
+        res.status(500).send('Объект не найден')
+    }
 
-            Product.find({ _id: { $in: idsProducts } }, function (err, products) {
-                if (err) return console.log(err);
-                res.send({ products, quantityProducts });
-            });
-        });
-    }).catch(err => res.send('Объект не найден'));
+    // ============== v2 ==================
+    // ShipmentsToTTN.findOne({ _id: id }, function (err, shipmentsToTtn) {
+    //     if (err) return console.log(err);
+    // }).then((shipmentsToTtn) => {
+
+    //     Shipment.find({ _id: { $in: shipmentsToTtn.shipments } }, function (err, shipments) {
+    //         if (err) return console.log(err);
+    //     }).then(shipments => {
+    //         const idsProducts = [];
+    //         const quantityProducts = {};
+
+    //         for (let i = 0; i < shipments.length; i++) {
+    //             for (let j = 0; j < shipments[i].products.length; j++) {
+    //                 idsProducts.push(shipments[i].products[j].id);
+
+    //                 quantityProducts[shipments[i].products[j].id] = quantityProducts[shipments[i].products[j].id] ?
+    //                     quantityProducts[shipments[i].products[j].id] + parseInt(shipments[i].products[j].quantity) :
+    //                     parseInt(shipments[i].products[j].quantity);
+    //             }
+    //         }
+
+    //         Product.find({ _id: { $in: idsProducts } }, function (err, products) {
+    //             if (err) return console.log(err);
+    //             res.send({ products, quantityProducts });
+    //         });
+    //     });
+    // }).catch(err => res.send('Объект не найден'));
 };
 
-export function getProductsFromShipment(req, res) {
+export async function getProductsFromShipment(req, res) {
     const id = req.params.id;
-    Shipment.findOne({ _id: id }, function (err, shipment) {
+
+    try {
+        const shipment = await Shipment.findOne({ _id: id });
+
+        const idsProducts = [];
+
+        for (let i = 0; i < shipment.products.length; i++) {
+            idsProducts.push(shipment.products[i].id);
+        }
+
+        const products = await Product.find({ _id: { $in: idsProducts } });
+
+        res.send(products);
+    } catch (err) {
+        console.log(`Ошибка: ${err}`);
+        res.status(500).send('Объект не найден')
+    }
+
+    // ============== v2 ==================
+    /* Shipment.findOne({ _id: id }, function (err, shipment) {
 
         if (err) return console.log(err);
 
@@ -209,7 +256,7 @@ export function getProductsFromShipment(req, res) {
             if (err) return console.log(err);
             res.send(products);
         });
-    });
+    }); */
 };
 
 export function updateStatusOfShipments(req, res) {

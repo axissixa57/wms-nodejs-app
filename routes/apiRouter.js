@@ -13,13 +13,13 @@ apiRouter.post("/products", apiController.createProduct);
 apiRouter.delete("/products/:id", apiController.deleteProduct);
 apiRouter.put("/products", apiController.editProduct);
 
-apiRouter.post("/shipments", apiController.createShipment);
+apiRouter.get("/shipment/:id/products", apiController.getProductsFromShipment);
+apiRouter.put("/shipment", apiController.updateShipmentStatus);
 apiRouter.get("/shipments/:id", apiController.getShipmentById);
 apiRouter.get("/shipments", apiController.getShipments);
 apiRouter.get("/shipments/codecar/:id", apiController.getProductsFromShipmentsByCodeCar);
-apiRouter.get("/shipment/:id/products", apiController.getProductsFromShipment);
+apiRouter.post("/shipments", apiController.createShipment);
 apiRouter.put("/shipments", apiController.updateStatusOfShipments);
-apiRouter.put("/shipment", apiController.updateShipmentStatus);
 apiRouter.delete("/shipments/:id", apiController.deleteShipment);
 
 apiRouter.get("/consignees", apiController.getConsignees);

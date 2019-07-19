@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
+import chalk from 'chalk';
 import session from 'express-session';
 
 import { myConfig } from './library/config';
@@ -23,7 +24,15 @@ const app = express();
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
+app.use(logger(function (tokens, req, res) {
+    return [
+        chalk.green.bold(tokens.method(req, res)),
+        chalk.red.bold(tokens.status(req, res)),
+        chalk.white(tokens.url(req, res)),
+        chalk.yellow(tokens['response-time'](req, res) + ' ms'),
+    ].join(' ');
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));

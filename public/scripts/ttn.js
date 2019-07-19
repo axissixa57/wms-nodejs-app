@@ -288,7 +288,7 @@ $('#btnEnter').click(() => {
 $('#btnPrint').click(() => {
     const id = $('input[name=id]').attr('data-id') || $('input[name=id]').val();
     if (id == '0') return alert('Сначала создайте документ.');
-    window.open('/templates/ttn/' + id);
+    window.open(`/templates/ttn/${id}/ttn.pdf`);
 });
 
 $('#btnCar').on('click', () => {

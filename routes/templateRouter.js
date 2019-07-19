@@ -17,7 +17,7 @@ templateRouter.get("/shipment", (req, res) => {
 templateRouter.get("/remainder", (req, res) => {
     res.render('templates/remainder/remainder-to-print.ejs');
 });
-templateRouter.get("/ttn/:id", async (req, res) => {
+templateRouter.get("/ttn/:id/ttn.pdf", async (req, res) => {
     const obj = {};
     const idsProducts = [];
 
@@ -66,7 +66,7 @@ templateRouter.get("/ttn/:id", async (req, res) => {
         });
     })
 });
-templateRouter.get("/shipping-list", async (req, res) => { 
+templateRouter.get("/shipping-list.pdf", async (req, res) => {
     const idsShipments = typeof req.query.id == 'object' ? req.query.id.map(item => parseInt(item)) : [parseInt(req.query.id)];
 
     const obj = {};
@@ -95,7 +95,7 @@ templateRouter.get("/shipping-list", async (req, res) => {
                 console.log('Ошибка конвертации', err)
             }
 
-            //res.end(html);
+            // res.end(html);
             res.sendFile(path.join(__dirname, '../views/templates/shipments/file.pdf'));
         });
     })

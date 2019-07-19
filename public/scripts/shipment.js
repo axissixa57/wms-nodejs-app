@@ -1,3 +1,95 @@
+(async function bootstrap() {
+    const warehouses = await fetch('/api/warehouses').then(res => res.json());
+    const consignees = await fetch('/api/consignees').then(res => res.json());
+    const cosmeticsProducts = await fetch('/api/products/cosmetics').then(res => res.json());
+    const meatProducts = await fetch('/api/products/meat').then(res => res.json());
+    const marineProducts = await fetch('/api/products/marine').then(res => res.json());
+
+    if (warehouses) {
+        let tds = "";
+        $.each(warehouses, function (index, warehouse) {
+            tds += rowForReference(warehouse);
+        })
+        $("#all_warehouses tbody").append(tds);
+
+        const warehousesALL = document.querySelectorAll('#all_warehouses tbody tr');
+        const warehouseID = document.getElementById('warehouse_id');
+        const btnWarehouses = document.getElementById('btnWarehouses');
+        const warehouseModalScrollable = document.getElementById('warehouseModalScrollable');
+
+        toColorizeSelectedPositionAndChooseValue(warehousesALL, warehouseID, btnWarehouses, warehouseModalScrollable);
+    }
+
+    if (consignees) {
+        let tds = "";
+
+        $.each(consignees, function (index, consignee) {
+            tds += rowForReference(consignee);
+        });
+
+        $("#all_consignees tbody").append(tds);
+
+        const consigneesALL = document.querySelectorAll('#all_consignees tbody tr');
+        const consigneeID = document.getElementById('consignee_id');
+        const btnConsignees = document.getElementById('btnConsignees');
+        const receiverOfGoodsModalScrollable = document.getElementById('receiverOfGoodsModalScrollable');
+
+        toColorizeSelectedPositionAndChooseValue(consigneesALL, consigneeID, btnConsignees, receiverOfGoodsModalScrollable);
+    }
+
+    if (cosmeticsProducts) {
+        let trs = "";
+        $.each(cosmeticsProducts, function (index, product) {
+            trs += rowForProductCategoryTable(product);
+        })
+
+        $("#cosmeticsDataTable tbody").append(trs);
+
+        const cosmeticsDataTableTrs = document.querySelectorAll('#cosmeticsDataTable tr');
+
+        for (let i = 0; i < cosmeticsDataTableTrs.length; i++) {
+            cosmeticsDataTableTrs[i].addEventListener('click', () => {
+                const code = parseInt(cosmeticsDataTableTrs[i].children[1].innerHTML);
+                GetProduct(code);
+            });
+        }
+    }
+
+    if (meatProducts) {
+        let trs = "";
+        $.each(meatProducts, function (index, product) {
+            trs += rowForProductCategoryTable(product);
+        })
+        $("#meatDataTable tbody").append(trs);
+
+        const meatDataTablebleTrs = document.querySelectorAll('#meatDataTable tr');
+
+        for (let i = 0; i < meatDataTablebleTrs.length; i++) {
+            meatDataTablebleTrs[i].addEventListener('click', () => {
+                const code = parseInt(meatDataTablebleTrs[i].children[1].innerHTML);
+                GetProduct(code);
+            });
+        }
+    }
+
+    if (marineProducts) {
+        let trs = "";
+        $.each(marineProducts, function (index, product) {
+            trs += rowForProductCategoryTable(product);
+        })
+        $("#marineDataTable tbody").append(trs);
+
+        const marineDataTablebleTrs = document.querySelectorAll('#marineDataTable tr');
+
+        for (let i = 0; i < marineDataTablebleTrs.length; i++) {
+            marineDataTablebleTrs[i].addEventListener('click', () => {
+                const code = parseInt(marineDataTablebleTrs[i].children[1].innerHTML);
+                GetProduct(code);
+            });
+        }
+    }
+})();
+
 function hideModalScrollable(someModalScrollable) {
     someModalScrollable.removeAttribute('aria-modal');
     someModalScrollable.setAttribute('aria-hidden', 'true');
@@ -40,7 +132,7 @@ function GetProduct(id) {
         url: "/api/products/" + id,
         type: "GET",
         contentType: "application/json",
-        success: function(product) {
+        success: function (product) {
             $(".mainTableOfGoods tbody").append(row(product));
         }
     });
@@ -154,7 +246,7 @@ function CreateShipment(shipmentID, date, status, warehouseID, dateShipment, con
             pallet: pallet,
             total_weight: total_weight
         }),
-        success: function(shipment) {
+        success: function (shipment) {
             $('.toast').toast('show');
         },
     })
@@ -167,7 +259,7 @@ function dateToRUFormat(date) {
     return newdate = dateRU.join('');
 }
 
-$("form").submit(function(e) {
+$("form").submit(function (e) {
     e.preventDefault();
     const id = this.elements["shipment_id"].value;
     const date = dateToRUFormat(this.elements["date"].value);
@@ -191,18 +283,18 @@ $("form").submit(function(e) {
     CreateShipment(id, date, status, warehouse, dateShipment, consignee, products, pallet, total_weight);
 });
 
-(function GetConsignees() {
+function GetConsignees() {
     $.ajax({
         url: "/api/consignees",
         type: "GET",
         contentType: "application/json",
-        success: function(consignees) {
+        success: function (consignees) {
             let tds = "";
 
-            $.each(consignees, function(index, consignee) {
+            $.each(consignees, function (index, consignee) {
                 tds += rowForReference(consignee);
             });
-            
+
             $("#all_consignees tbody").append(tds);
 
             const consigneesALL = document.querySelectorAll('#all_consignees tbody tr');
@@ -213,16 +305,16 @@ $("form").submit(function(e) {
             toColorizeSelectedPositionAndChooseValue(consigneesALL, consigneeID, btnConsignees, receiverOfGoodsModalScrollable);
         }
     });
-})();
+};
 
-(function GetWarehouses() {
+function GetWarehouses() {
     $.ajax({
         url: "/api/warehouses",
         type: "GET",
         contentType: "application/json",
-        success: function(warehouses) {
+        success: function (warehouses) {
             let tds = "";
-            $.each(warehouses, function(index, warehouse) {
+            $.each(warehouses, function (index, warehouse) {
                 tds += rowForReference(warehouse);
             })
             $("#all_warehouses tbody").append(tds);
@@ -235,7 +327,7 @@ $("form").submit(function(e) {
             toColorizeSelectedPositionAndChooseValue(warehousesALL, warehouseID, btnWarehouses, warehouseModalScrollable);
         }
     });
-})();
+};
 
 function rowForProductCategoryTable(product) {
     return `<tr role="row">
@@ -244,15 +336,15 @@ function rowForProductCategoryTable(product) {
             </tr>`;
 }
 
-(function GetCosmeticProducts() {
+function GetCosmeticProducts() {
     $.ajax({
         url: "/api/products/cosmetics",
         type: "GET",
         contentType: "application/json",
-        success: function(products) {
+        success: function (products) {
 
             let trs = "";
-            $.each(products, function(index, product) {
+            $.each(products, function (index, product) {
                 trs += rowForProductCategoryTable(product);
             })
             $("#cosmeticsDataTable tbody").append(trs);
@@ -267,16 +359,16 @@ function rowForProductCategoryTable(product) {
             }
         }
     });
-})();
+};
 
-(function GetMeatProducts() {
+function GetMeatProducts() {
     $.ajax({
         url: "/api/products/meat",
         type: "GET",
         contentType: "application/json",
-        success: function(products) {
+        success: function (products) {
             let trs = "";
-            $.each(products, function(index, product) {
+            $.each(products, function (index, product) {
                 trs += rowForProductCategoryTable(product);
             })
             $("#meatDataTable tbody").append(trs);
@@ -291,16 +383,16 @@ function rowForProductCategoryTable(product) {
             }
         }
     });
-})();
+};
 
-(function GetMarineProducts() {
+function GetMarineProducts() {
     $.ajax({
         url: "/api/products/marine",
         type: "GET",
         contentType: "application/json",
-        success: function(products) {
+        success: function (products) {
             let trs = "";
-            $.each(products, function(index, product) {
+            $.each(products, function (index, product) {
                 trs += rowForProductCategoryTable(product);
             })
             $("#marineDataTable tbody").append(trs);
@@ -315,4 +407,4 @@ function rowForProductCategoryTable(product) {
             }
         }
     });
-})();
+};
