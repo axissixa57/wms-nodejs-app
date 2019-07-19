@@ -1,6 +1,3 @@
-
-
-
 .filter {
     justify-content: space-between;
 }
@@ -58,6 +55,11 @@ input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#contractorDataTable th,
+#contractorDataTable td {
+    border: 1px solid black;
 }
 
 @media (min-width: 992px) {

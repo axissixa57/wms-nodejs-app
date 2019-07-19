@@ -16,6 +16,7 @@ export function getProducts(req, res) {
 export function getCosmeticProducts(req, res) {
 
     Product.find({ category: "Косметика и средства личной гигиены" }, function (err, doc) {
+
         if (err) return console.log(err);
         res.send(doc);
     });
@@ -24,6 +25,7 @@ export function getCosmeticProducts(req, res) {
 export function getMeatProducts(req, res) {
 
     Product.find({ category: "Мясо, колбасы и полуфабрикаты" }, function (err, doc) {
+
         if (err) return console.log(err);
         res.send(doc);
     });
@@ -32,6 +34,7 @@ export function getMeatProducts(req, res) {
 export function getMarineProducts(req, res) {
 
     Product.find({ category: "Рыба и морепродукты" }, function (err, doc) {
+
         if (err) return console.log(err);
         res.send(doc);
     });

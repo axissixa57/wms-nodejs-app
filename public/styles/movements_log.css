@@ -51,6 +51,11 @@
     background: #ee3f3f;
 }
 
+#ttnsDataTable th,
+#ttnsDataTable td {
+    border: 1px solid black;
+}
+
 @media (min-width: 992px) {
     .modal-lg,
     .modal-xl {

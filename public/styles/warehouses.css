@@ -61,6 +61,11 @@ input::-webkit-inner-spin-button {
     text-align: center;
 }
 
+#warehouseDataTable th,
+#warehouseDataTable td {
+    border: 1px solid black;
+}
+
 @media (min-width: 992px) {
 
     .modal-lg,

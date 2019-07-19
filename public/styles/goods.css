@@ -59,6 +59,11 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+#productDataTable th,
+#productDataTable td {
+    border: 1px solid black;
+}
+
 @media (min-width: 992px) {
 
     .modal-lg,

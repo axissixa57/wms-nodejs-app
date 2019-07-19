@@ -62,3 +62,8 @@
 .green-bg {
     background: #1dd81d;
 }
+
+#dataTable th,
+#dataTable td {
+    border: 1px solid black;
+}
