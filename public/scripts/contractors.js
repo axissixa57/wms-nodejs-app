@@ -2,22 +2,26 @@ let ROWS = '';
 let lineNumber = 0;
 
 function row(contractor) {
+    const role = $('#contractorDataTable > tbody');
+
+    const partForAdmin = `<td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Действие
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item editLink" data-id="${contractor._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
+                                    <a class="dropdown-item removeLink" data-id="${contractor._id}">Удалить</a>
+                                </div>
+                            </div>
+                        </td>`;
+
     return `<tr role="row" data-rowid="${contractor._id}">
                 <td>${++lineNumber}</td>
                 <td>${contractor._id}</td>
                 <td>${contractor.address}</td> 
                 <td>${contractor.phone}</td> 
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Действие
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item editLink" data-id="${contractor._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
-                            <a class="dropdown-item removeLink" data-id="${contractor._id}">Удалить</a>
-                        </div>
-                    </div>
-                </td>
+                ${(role.hasClass('admin')) ? partForAdmin : ''};
             </tr>`;
 }
 

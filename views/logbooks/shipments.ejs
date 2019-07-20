@@ -44,14 +44,18 @@
                                             Поиск по дате
                                         </button>
                                         <!-- Button trigger modal -->
-                                        <button id="btnSelected" type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Выбранное добавить
-                                        </button>
+                                        <% if (role === 'admin' || role === 'economist') { %>
+                                            <button id="btnSelected" type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+                                                Выбранное добавить
+                                            </button>
+                                        <% } %>
                                         <!-- Button trigger modal -->
 
-                                        <button id="btnShippingList" type="button" class="btn btn-primary mt-2">
-                                            Отгрузочный лист
-                                        </button>
+                                        <% if (role === 'admin' || role === 'checker') { %>
+                                            <button id="btnShippingList" type="button" class="btn btn-primary mt-2">
+                                                Отгрузочный лист
+                                            </button>
+                                        <% } %>
 
                                         <!-- Modal -->
                                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -125,16 +129,19 @@
                                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 67px;">Остаток</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="<%-role-%>">
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
 
-                                <div class="row order-list p-2 d-flex justify-content-end">
-                                    <button id="print-order-list" type="button" class="btn btn-primary ignorePDF">Печать</button>
-                                </div>
+                                
+                                    <div class="row order-list p-2 d-flex justify-content-end">
+                                    <% if (role === 'admin' || role === 'checker') { %>
+                                        <button id="print-order-list" type="button" class="btn btn-primary ignorePDF">Печать</button>
+                                    <% } %>
+                                    </div>
                             </div>
                         </div>
                     </div>

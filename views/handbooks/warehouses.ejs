@@ -33,9 +33,11 @@
                                 <div class="row p-0 mt-2">
                                     <div>
                                         <!-- Button trigger modal -->
+                                        <% if (role === 'admin') { %>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalAdd">
                                             Добавить склад
                                         </button>
+                                        <% } %>
 
                                         <!-- Modal window of Add button -->
                                         <div class="modal fade" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -152,10 +154,12 @@
                                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" style="width: 59px;">Код</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Адрес</th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Телефон</th>
-                                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Опции</th>
+                                                <% if (role === 'admin') { %>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 68px;">Опции</th>
+                                                <% } %>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody class="<%-role-%>"></tbody>
                                     </table>
                                 </div>
                             </div>

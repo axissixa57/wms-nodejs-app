@@ -1,14 +1,16 @@
 let ROWS = '';
 
 const btnPrintOrder = document.getElementById('print-order-list');
-btnPrintOrder.addEventListener('click', () => {
-    btnPrintOrder.style.display = 'none';
-    // window.open('/templates/shipments/shipment.html');
-    window.open('/templates/shipment');
-    setTimeout(() => {
-        btnPrintOrder.style.display = 'block';
-    }, 0);
-});
+
+if(btnPrintOrder) {
+    btnPrintOrder.addEventListener('click', () => {
+        btnPrintOrder.style.display = 'none';
+        window.open('/templates/shipment');
+        setTimeout(() => {
+            btnPrintOrder.style.display = 'block';
+        }, 0);
+    });
+}
 
 function row(shipment) {
     const dateFromDb = new Date(shipment.shipment_date);
@@ -16,6 +18,10 @@ function row(shipment) {
     const month = dateFromDb.getMonth() > 9 ? dateFromDb.getMonth() + 1 : `0${dateFromDb.getMonth() + 1}`;
     const date = `${day}.${month}.${dateFromDb.getFullYear()}`;
     let bgColor = '';
+    const role = $('#shipmentDataTable > tbody');
+    $(".shipment_title").html('');
+
+    const partForLogist = `<a class="dropdown-item removeLink" href="#" data-id="${shipment._id}">Удалить</a>`
 
     if (shipment.status == 'К выполнению') {
         bgColor = 'blue-bg';
@@ -43,7 +49,7 @@ function row(shipment) {
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item btnPick" href="#" data-toggle="modal" data-target=".bd-example-modal-xl">Открыть</a>
-                            <a class="dropdown-item removeLink" href="#" data-id="${shipment._id}">Удалить</a>
+                            ${(role.hasClass('admin') || role.hasClass('logist')) ? partForLogist : ''}
                         </div>
                     </div>
                 </td>
@@ -135,6 +141,7 @@ function markShipmentsAndSelectShipment() {
 })();
 
 function shipmentTitle(shipment, consignee) {
+    const role = $('#shipmentDataTable > tbody');
     $(".shipment_title").html('');
     const dateFromDb = new Date(shipment.shipment_date);
     const day = dateFromDb.getDate() > 9 ? dateFromDb.getDate() : `0${dateFromDb.getDate()}`;
@@ -148,22 +155,24 @@ function shipmentTitle(shipment, consignee) {
     const minutesNow = time.getMinutes() > 9 ? time.getMinutes() : `0${time.getMinutes()}`;
     const secondsNow = time.getSeconds() > 9 ? time.getSeconds() : `0${time.getSeconds()}`;
 
+    const partForChecker = `<div class="d-flex col-md-4 p-0 pt-1 status">
+                                <p class="h6 pt-2 pr-1">Статус:</p>
+                                <div class="pl-1 pr-1">
+                                    <select class="status custom-select" id="status" name="status" >
+                                        <option selected>К выполнению</option>
+                                        <option>Собирается</option>
+                                        <option>Собрана</option>
+                                        <option>Проверена</option>
+                                    </select>
+                                </div>
+                                <button id="btnSave" type="button" class="btn btn-primary" onclick="getId()">Сохранить</button>
+                            </div>`;
+
     return `<p class="h2 p-1">Сборочный лист № <i id="shipmentId">${shipment._id}</i> от ${date}</p>
             <p class="h6 pt-2">Дата и время: ${dayNow}.${monthNow}.${yearNow} ${hourNow}:${minutesNow}:${secondsNow}</p>
             <p class="h6 pt-1">Грузополучатель: ${shipment.id_consignee}</p>
             <p class="h6 pt-1">Адрес грузополучателя: ${consignee.address}</p>
-            <div class="d-flex col-md-4 p-0 pt-1 status">
-                <p class="h6 pt-2 pr-1">Статус:</p>
-                <div class="pl-1 pr-1">
-                    <select class="status custom-select" id="status" name="status" >
-                        <option selected>К выполнению</option>
-                        <option>Собирается</option>
-                        <option>Собрана</option>
-                        <option>Проверена</option>
-                    </select>
-                </div>
-                <button id="btnSave" type="button" class="btn btn-primary" onclick="getId()">Сохранить</button>
-            </div>`;
+            ${(role.hasClass('checker') || role.hasClass('admin')) ? partForChecker : ''}`;
 }
 
 function getId() {

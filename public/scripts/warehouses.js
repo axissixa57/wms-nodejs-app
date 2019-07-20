@@ -1,23 +1,27 @@
 let ROWS = '';
-
 let lineNumber = 0;
+
 function row(warehouse) {
+    const role = $('#warehouseDataTable > tbody');
+
+    const partForAdmin = `<td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Действие
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item editLink" data-id="${warehouse._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
+                                    <a class="dropdown-item removeLink" data-id="${warehouse._id}">Удалить</a>
+                                </div>
+                            </div>
+                        </td>`;
+
     return `<tr role="row" data-rowid="${warehouse._id}">
                 <td>${++lineNumber}</td>
                 <td>${warehouse._id}</td>
                 <td>${warehouse.address}</td> 
                 <td>${warehouse.phone}</td> 
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Действие
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item editLink" data-id="${warehouse._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
-                            <a class="dropdown-item removeLink" data-id="${warehouse._id}">Удалить</a>
-                        </div>
-                    </div>
-                </td>
+                ${(role.hasClass('admin')) ? partForAdmin : ''};
             </tr>`;
 }
 

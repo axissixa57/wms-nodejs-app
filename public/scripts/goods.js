@@ -2,6 +2,20 @@ let ROWS = '';
 let lineNumber = 0;
 
 function row(product) {
+    const role = $('#productDataTable > tbody');
+
+    const partForAdmin = `<td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Действие
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item editLink" data-id="${product._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
+                                    <a class="dropdown-item removeLink" data-id="${product._id}">Удалить</a>
+                                </div>
+                            </div>
+                        </td>`;
+
     return `<tr role="row" data-rowid="${product._id}">
                 <td>${++lineNumber}</td>
                 <td>${product._id}</td>
@@ -10,17 +24,7 @@ function row(product) {
                 <td>${product.unit}</td> 
                 <td>${product.weight}</td> 
                 <td>${product.cost}</td> 
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Действие
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item editLink" data-id="${product._id}" data-toggle="modal" data-target="#EditModal">Редактировать</a>
-                            <a class="dropdown-item removeLink" data-id="${product._id}">Удалить</a>
-                        </div>
-                    </div>
-                </td>
+                ${(role.hasClass('admin')) ? partForAdmin : ''};
             </tr>`;
 }
 
