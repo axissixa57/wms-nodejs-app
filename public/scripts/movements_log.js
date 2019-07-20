@@ -132,20 +132,22 @@ function toDateMillisec(dateString) {
     return Date.parse(new Date(splitDate[2], splitDate[1] - 1, splitDate[0]));
 }
 
-$('#btnSearch').on('click', () => {
-    let trs = '';
-    const startDate = $('#startDate').val();
-    const finishDate = $('#finishDate').val();
-    const from = startDate == '' ? Date.parse('01 Jan 1970 00:00:00 GMT') : toDateMillisec(startDate);
-    const to = finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
-
-    for (const row of ROWS) {
-
-        if (from <= toDateMillisec(row.children[1].innerHTML) && to >= toDateMillisec(row.children[1].innerHTML)) {
-            trs += row.outerHTML;
+$('.datepicker-here').datepicker({
+    onSelect: () => {
+        let trs = '';
+        const startDate = $('#startDate').val();
+        const finishDate = $('#finishDate').val();
+        const from = startDate == '' ? Date.parse('01 Jan 1970 00:00:00 GMT') : toDateMillisec(startDate);
+        const to = finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
+    
+        for (const row of ROWS) {
+    
+            if (from <= toDateMillisec(row.children[1].innerHTML) && to >= toDateMillisec(row.children[1].innerHTML)) {
+                trs += row.outerHTML;
+            }
         }
+    
+        $("#ttnsDataTable tbody").html('');
+        $("#ttnsDataTable tbody").append(trs);
     }
-
-    $("#ttnsDataTable tbody").html('');
-    $("#ttnsDataTable tbody").append(trs);
-})
+});

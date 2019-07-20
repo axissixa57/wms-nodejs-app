@@ -2,7 +2,7 @@ let ROWS = '';
 
 const btnPrintOrder = document.getElementById('print-order-list');
 
-if(btnPrintOrder) {
+if (btnPrintOrder) {
     btnPrintOrder.addEventListener('click', () => {
         btnPrintOrder.style.display = 'none';
         window.open('/templates/shipment');
@@ -357,25 +357,6 @@ function toDateMillisec(dateString) {
     return Date.parse(new Date(splitDate[2], splitDate[1] - 1, splitDate[0]));
 }
 
-$('#btnSearch').on('click', () => {
-    let trs = '';
-    const startDate = $('#startDate').val();
-    const finishDate = $('#finishDate').val();
-    const from = startDate == '' ? Date.parse('01 Jan 1970 00:00:00 GMT') : toDateMillisec(startDate);
-    const to = finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
-
-    for (const row of ROWS) {
-
-        if (from <= toDateMillisec(row.children[0].innerHTML) && to >= toDateMillisec(row.children[0].innerHTML)) {
-            trs += row.outerHTML;
-        }
-    }
-
-    $(".mainDataTable tbody").html('');
-    $(".mainDataTable tbody").append(trs);
-    markShipmentsAndSelectShipment();
-})
-
 $('#btnShippingList').on('click', () => {
     const rowsMainDataTable = document.querySelectorAll('.mainDataTable tbody tr');
     let req = '';
@@ -391,4 +372,25 @@ $('#btnShippingList').on('click', () => {
     } else {
         alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
     }
-})
+});
+
+$('.datepicker-here').datepicker({
+    onSelect: () => {
+        let trs = '';
+        const startDate = $('#startDate').val();
+        const finishDate = $('#finishDate').val();
+        const from = startDate == '' ? Date.parse('01 Jan 1970 00:00:00 GMT') : toDateMillisec(startDate);
+        const to = finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
+
+        for (const row of ROWS) {
+
+            if (from <= toDateMillisec(row.children[0].innerHTML) && to >= toDateMillisec(row.children[0].innerHTML)) {
+                trs += row.outerHTML;
+            }
+        }
+
+        $(".mainDataTable tbody").html('');
+        $(".mainDataTable tbody").append(trs);
+        markShipmentsAndSelectShipment();
+    }
+});
