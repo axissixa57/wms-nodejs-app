@@ -275,6 +275,7 @@ export function updateStatusOfShipments(req, res) {
     { $set: { status: status } },
     function (err, result) {
       console.log(result);
+      res.send(result);
     }
   );
 }
@@ -508,7 +509,7 @@ export function updateWarehouse(req, res) {
   });
 }
 
-export async function fromOneWarehouseToAnother(req, res) { 
+export async function addQuantutyfromOneWarehouseToAnother(req, res) {
   if (!req.body) return res.sendStatus(400);
 
   const warehouseId = parseInt(req.body.id_warehouse);
@@ -627,35 +628,108 @@ export function addQuantutyOfGoodsToWarehouse(req, res) {
   });
 }
 
-export function returnQuantutyOfProductsToWarehouse(req, res) {
+export async function returnQuantutyfromOneWarehouseToAnother(req, res) {
   if (!req.body) return res.sendStatus(400);
 
   const warehouseId = parseInt(req.body.id_warehouse);
-  const products = req.body.products;
+  const consigneeId = parseInt(req.body.id_consignee);
+  const sentProducts = req.body.products;
 
-  for (let i = 0; i < products.length; i++) {
-    Warehouse.findOne(
-      { _id: warehouseId, 'products.id_product': products[i].id },
-      { 'products.$': 1 },
-      function (err, doc) {
+  console.log(warehouseId, consigneeId, sentProducts)
+
+  const warehouseAddressee = await Warehouse.findOne({ _id: consigneeId });
+
+  // update quantity 
+  for (let i = 0; i < sentProducts.length; i++) {
+    const productFromWarehouse = await Warehouse.findOne(
+      { _id: warehouseId, 'products.id_product': sentProducts[i].id },
+      { _id: 0, products: { $elemMatch: { id_product: sentProducts[i].id } } }
+    );
+
+    const quantityFromWarehouse = productFromWarehouse.products[0].quantity;
+
+    const result =
+      parseInt(quantityFromWarehouse) + parseInt(sentProducts[i].quantity);
+
+    console.log(result)
+
+    Warehouse.updateOne(
+      { _id: warehouseId, 'products.id_product': sentProducts[i].id },
+      { $set: { 'products.$.quantity': result } },
+      function (err, warehouse) {
         if (err) return console.log(err);
-        const quantityFromWarehouse = doc.products[0].quantity;
-        const result =
-          parseInt(quantityFromWarehouse) + parseInt(products[i].quantity);
-
-        Warehouse.updateOne(
-          { _id: warehouseId, 'products.id_product': products[i].id },
-          { $set: { 'products.$.quantity': result } },
-          function (err, warehouse) {
-            if (err) return console.log(err);
-            console.log(warehouse);
-          }
+        console.log(
+          `Код ${sentProducts[i].id} вернулся на склад ${warehouseId}!`
         );
-
-        if (i == products.length - 1) return res.status(200).send('OK');
       }
     );
+
+    if (warehouseAddressee) {
+      const wh = await Warehouse.findOne(
+        { _id: consigneeId, "products.id_product": sentProducts[i].id },
+        { _id: 0, products: { $elemMatch: { id_product: sentProducts[i].id } } }
+      );
+
+      const whProductQuantity = wh.products[0].quantity;
+      const newQuantity = whProductQuantity - parseInt(sentProducts[i].quantity);
+      console.log(newQuantity)
+
+      Warehouse.updateOne(
+        { _id: consigneeId, "products.id_product": sentProducts[i].id },
+        { $set: { "products.$.quantity": newQuantity } },
+        function (err, warehouse) {
+          if (err) return console.log(err);
+          console.log(`Код ${sentProducts[i].id} товара успешно обновлён на складе ${consigneeId}`);
+        }
+      );
+    }
+
+    if (i == sentProducts.length - 1) return res.send('Успех');
   }
+  // ============================
+  // for (let i = 0; i < products.length; i++) {
+  //   Warehouse.findOne(
+  //     { _id: warehouseId, 'products.id_product': products[i].id },
+  //     { 'products.$': 1 },
+  //     function (err, doc) {
+  //       if (err) return console.log(err);
+  //       const quantityFromWarehouse = doc.products[0].quantity;
+  //       const result =
+  //         parseInt(quantityFromWarehouse) + parseInt(products[i].quantity);
+
+  //       Warehouse.updateOne(
+  //         { _id: warehouseId, 'products.id_product': products[i].id },
+  //         { $set: { 'products.$.quantity': result } },
+  //         function (err, warehouse) {
+  //           if (err) return console.log(err);
+  //           console.log(warehouse);
+  //         }
+  //       );
+  //     }
+  //   );
+
+  //   Warehouse.findOne(
+  //     { _id: consigneeId, 'products.id_product': products[i].id },
+  //     { 'products.$': 1 },
+  //     function (err, doc) {
+  //       if (err) return console.log(err);
+  //       const quantityFromWarehouse = doc.products[0].quantity;
+  //       const result =
+  //         parseInt(quantityFromWarehouse) - parseInt(products[i].quantity);
+
+  //       Warehouse.updateOne(
+  //         { _id: consigneeId, 'products.id_product': products[i].id },
+  //         { $set: { 'products.$.quantity': result } },
+  //         function (err, warehouse) {
+  //           if (err) return console.log(err);
+  //           console.log(warehouse);
+  //         }
+  //       );
+  //     }
+  //   );
+
+  //   if (i == products.length - 1) return res.status(200).send('OK');
+  // }
 }
 
 export function deleteWarehouse(req, res) {

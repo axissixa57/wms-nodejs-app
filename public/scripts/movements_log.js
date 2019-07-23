@@ -67,20 +67,20 @@ function DeleteTTN(id) {
     contentType: 'application/json',
     method: 'DELETE',
     success: function(ttn) {
-      PlusProductQuantityOfWarehouse(ttn.id_warehouse, ttn.id_consignee, ttn.products);
+      returnQuantutyfromOneWarehouseToAnother(ttn.id_warehouse, ttn.id_consignee, ttn.products);
       $(`tr[data-rowid="${ttn._id}"]`).remove();
     }
   });
 }
 
-function PlusProductQuantityOfWarehouse(docWarehouseID, docConsigneeID, docProducts) {
+function returnQuantutyfromOneWarehouseToAnother(docWarehouseID, docConsigneeID, docProducts) {
   $.ajax({
     url: '/api/warehouse/return-quantity',
     contentType: 'application/json',
     method: 'PUT',
     data: JSON.stringify({
       id_warehouse: docWarehouseID,
-      id_consignee: docWarehouseID,
+      id_consignee: docConsigneeID,
       products: docProducts
     })
   });

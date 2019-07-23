@@ -39,15 +39,15 @@ apiRouter.post('/warehouses', apiController.addProductsToWarehouse);
 apiRouter.put('/warehouses', apiController.updateWarehouse);
 apiRouter.put(
   '/warehouse/add-quantity-from-one-to-another',
-  apiController.fromOneWarehouseToAnother
+  apiController.addQuantutyfromOneWarehouseToAnother
 );
 apiRouter.put(
   '/warehouse/editquantity',
   apiController.addQuantutyOfGoodsToWarehouse
 );
-apiRouter.put(
+apiRouter.put( 
   '/warehouse/return-quantity',
-  apiController.returnQuantutyOfProductsToWarehouse
+  apiController.returnQuantutyfromOneWarehouseToAnother 
 );
 apiRouter.delete('/warehouses/:id', apiController.deleteWarehouse);
 
