@@ -3,38 +3,44 @@ let ROWS = '';
 const btnPrintOrder = document.getElementById('print-order-list');
 
 if (btnPrintOrder) {
-    btnPrintOrder.addEventListener('click', () => {
-        btnPrintOrder.style.display = 'none';
-        window.open('/templates/shipment');
-        setTimeout(() => {
-            btnPrintOrder.style.display = 'block';
-        }, 0);
-    });
+  btnPrintOrder.addEventListener('click', () => {
+    btnPrintOrder.style.display = 'none';
+    window.open('/templates/shipment');
+    setTimeout(() => {
+      btnPrintOrder.style.display = 'block';
+    }, 0);
+  });
 }
 
 function row(shipment) {
-    const dateFromDb = new Date(shipment.shipment_date);
-    const day = dateFromDb.getDate() > 9 ? dateFromDb.getDate() : `0${dateFromDb.getDate()}`;
-    const month = dateFromDb.getMonth() > 9 ? dateFromDb.getMonth() + 1 : `0${dateFromDb.getMonth() + 1}`;
-    const date = `${day}.${month}.${dateFromDb.getFullYear()}`;
-    let bgColor = '';
-    const role = $('#shipmentDataTable > tbody');
-    $(".shipment_title").html('');
+  const dateFromDb = new Date(shipment.shipment_date);
+  const day =
+    dateFromDb.getDate() > 9
+      ? dateFromDb.getDate()
+      : `0${dateFromDb.getDate()}`;
+  const month =
+    dateFromDb.getMonth() > 9
+      ? dateFromDb.getMonth() + 1
+      : `0${dateFromDb.getMonth() + 1}`;
+  const date = `${day}.${month}.${dateFromDb.getFullYear()}`;
+  let bgColor = '';
+  const role = $('#shipmentDataTable > tbody');
+  $('.shipment_title').html('');
 
-    const partForLogist = `<a class="dropdown-item removeLink" href="#" data-id="${shipment._id}">Удалить</a>`
+  const partForLogist = `<a class="dropdown-item removeLink" href="#" data-id="${shipment._id}">Удалить</a>`;
 
-    if (shipment.status == 'К выполнению') {
-        bgColor = 'blue-bg';
-    } else if (shipment.status == 'Собирается') {
-        bgColor = 'red-bg';
-    } else if (shipment.status == 'Собрана') {
-        bgColor = 'orange-bg';
-    } else if (shipment.status == 'Проверена') {
-        bgColor = 'yellow-bg';
-    }
+  if (shipment.status == 'К выполнению') {
+    bgColor = 'blue-bg';
+  } else if (shipment.status == 'Собирается') {
+    bgColor = 'red-bg';
+  } else if (shipment.status == 'Собрана') {
+    bgColor = 'orange-bg';
+  } else if (shipment.status == 'Проверена') {
+    bgColor = 'yellow-bg';
+  }
 
-    if (shipment.status != 'Отгружена') {
-        return `<tr class=${bgColor} data-rowid="${shipment._id}">
+  if (shipment.status != 'Отгружена') {
+    return `<tr class=${bgColor} data-rowid="${shipment._id}">
                 <td>${date}</td>
                 <td>${shipment.id_warehouse}</td> 
                 <td>${shipment.id_consignee}</td> 
@@ -49,35 +55,39 @@ function row(shipment) {
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item btnPick" href="#" data-toggle="modal" data-target=".bd-example-modal-xl">Открыть</a>
-                            ${(role.hasClass('admin') || role.hasClass('logist')) ? partForLogist : ''}
+                            ${
+                              role.hasClass('admin') || role.hasClass('logist')
+                                ? partForLogist
+                                : ''
+                            }
                         </div>
                     </div>
                 </td>
             </tr>`;
-    }
+  }
 }
 
 let lineNumber = 0;
 function rowForShipmentDataTable(product, shipment, warehouse) {
-    let quantity = 0;
-    let storage_location;
-    let remainder;
+  let quantity = 0;
+  let storage_location;
+  let remainder;
 
-    for (let i = 0; i < shipment.products.length; i++) {
-        if (shipment.products[i].id == product._id) {
-            quantity = shipment.products[i].quantity;
-        }
+  for (let i = 0; i < shipment.products.length; i++) {
+    if (shipment.products[i].id == product._id) {
+      quantity = shipment.products[i].quantity;
     }
+  }
 
-    for (let i = 0; i < warehouse.products.length; i++) {
-        if (warehouse.products[i].id_product == product._id) {
-            storage_location = warehouse.products[i].storage_location;
-            remainder = warehouse.products[i].quantity;
-            break;
-        }
+  for (let i = 0; i < warehouse.products.length; i++) {
+    if (warehouse.products[i].id_product == product._id) {
+      storage_location = warehouse.products[i].storage_location;
+      remainder = warehouse.products[i].quantity;
+      break;
     }
+  }
 
-    return `<tr role="row">
+  return `<tr role="row">
                 <td>${++lineNumber}</td>
                 <td>${product._id}</td>
                 <td>${product.category}</td>
@@ -90,72 +100,86 @@ function rowForShipmentDataTable(product, shipment, warehouse) {
 }
 
 function markShipmentsAndSelectShipment() {
-    const rowsMainDataTable = document.querySelectorAll('.mainDataTable tbody tr');
-    for (const row of rowsMainDataTable) {
+  const rowsMainDataTable = document.querySelectorAll(
+    '.mainDataTable tbody tr'
+  );
+  for (const row of rowsMainDataTable) {
+    row.addEventListener('click', e => {
+      if (e.ctrlKey) {
+        if (row.classList.contains('green-bg')) {
+          row.classList.remove('green-bg');
+        } else {
+          row.classList.add('green-bg');
+        }
+      }
+    });
+  }
 
-        row.addEventListener('click', (e) => {
-            if (e.ctrlKey) {
-                if (row.classList.contains('green-bg')) {
-                    row.classList.remove('green-bg');
-                } else {
-                    row.classList.add('green-bg');
-                }
-            }
-        })
-    }
-
-    const btnPicks = document.querySelectorAll('.btnPick');
-    for (const btnPick of btnPicks) {
-
-        btnPick.addEventListener('click', (e) => {
-            const shipmentDataTable = document.querySelector('#shipmentDataTable tbody').innerHTML = '';
-            const id_shipment = btnPick.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML;
-            lineNumber = '';
-            GetShipment(id_shipment);
-        });
-    }
+  const btnPicks = document.querySelectorAll('.btnPick');
+  for (const btnPick of btnPicks) {
+    btnPick.addEventListener('click', e => {
+      const shipmentDataTable = (document.querySelector(
+        '#shipmentDataTable tbody'
+      ).innerHTML = '');
+      const id_shipment =
+        btnPick.parentElement.parentElement.parentElement.previousElementSibling
+          .previousElementSibling.previousElementSibling.previousElementSibling
+          .innerHTML;
+      lineNumber = '';
+      GetShipment(id_shipment);
+    });
+  }
 }
 
 (function GetShipments() {
-    $.ajax({
-        url: "/api/shipments",
-        type: "GET",
-        contentType: "application/json",
-        success: function (shipments) {
-            let rows = "";
-            $.each(shipments, function (index, shipment) {
-                rows += row(shipment);
-            });
+  $.ajax({
+    url: '/api/shipments',
+    type: 'GET',
+    contentType: 'application/json',
+    success: function(shipments) {
+      let rows = '';
+      $.each(shipments, function(index, shipment) {
+        rows += row(shipment);
+      });
 
-            $(".mainDataTable tbody").append(rows);
-            ROWS = $(".mainDataTable tbody tr");
+      $('.mainDataTable tbody').append(rows);
+      ROWS = $('.mainDataTable tbody tr');
 
-            markShipmentsAndSelectShipment();
+      markShipmentsAndSelectShipment();
 
-            $("body").on("click", ".removeLink", function () {
-                const id = $(this).data("id");
-                DeleteShipment(id);
-            })
-        }
-    });
+      $('body').on('click', '.removeLink', function() {
+        const id = $(this).data('id');
+        DeleteShipment(id);
+      });
+    }
+  });
 })();
 
 function shipmentTitle(shipment, consignee) {
-    const role = $('#shipmentDataTable > tbody');
-    $(".shipment_title").html('');
-    const dateFromDb = new Date(shipment.shipment_date);
-    const day = dateFromDb.getDate() > 9 ? dateFromDb.getDate() : `0${dateFromDb.getDate()}`;
-    const month = dateFromDb.getMonth() > 9 ? dateFromDb.getMonth() : `0${dateFromDb.getMonth()}`;
-    const date = `${day}.${month}.${dateFromDb.getFullYear()}`;
-    const time = new Date();
-    const dayNow = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
-    const monthNow = time.getMonth() + 1 > 9 ? time.getMonth() + 1 : `0${time.getMonth() + 1}`;
-    const yearNow = time.getFullYear();
-    const hourNow = time.getHours() > 9 ? time.getHours() : `0${time.getHours()}`;
-    const minutesNow = time.getMinutes() > 9 ? time.getMinutes() : `0${time.getMinutes()}`;
-    const secondsNow = time.getSeconds() > 9 ? time.getSeconds() : `0${time.getSeconds()}`;
+  const role = $('#shipmentDataTable > tbody');
+  $('.shipment_title').html('');
+  const dateFromDb = new Date(shipment.shipment_date);
+  const day =
+    dateFromDb.getDate() > 9
+      ? dateFromDb.getDate()
+      : `0${dateFromDb.getDate()}`;
+  const month =
+    dateFromDb.getMonth() > 9
+      ? dateFromDb.getMonth()
+      : `0${dateFromDb.getMonth()}`;
+  const date = `${day}.${month}.${dateFromDb.getFullYear()}`;
+  const time = new Date();
+  const dayNow = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+  const monthNow =
+    time.getMonth() + 1 > 9 ? time.getMonth() + 1 : `0${time.getMonth() + 1}`;
+  const yearNow = time.getFullYear();
+  const hourNow = time.getHours() > 9 ? time.getHours() : `0${time.getHours()}`;
+  const minutesNow =
+    time.getMinutes() > 9 ? time.getMinutes() : `0${time.getMinutes()}`;
+  const secondsNow =
+    time.getSeconds() > 9 ? time.getSeconds() : `0${time.getSeconds()}`;
 
-    const partForChecker = `<div class="d-flex col-md-4 p-0 pt-1 status">
+  const partForChecker = `<div class="d-flex col-md-4 p-0 pt-1 status">
                                 <p class="h6 pt-2 pr-1">Статус:</p>
                                 <div class="pl-1 pr-1">
                                     <select class="status custom-select" id="status" name="status" >
@@ -168,229 +192,249 @@ function shipmentTitle(shipment, consignee) {
                                 <button id="btnSave" type="button" class="btn btn-primary" onclick="getId()">Сохранить</button>
                             </div>`;
 
-    return `<p class="h2 p-1">Сборочный лист № <i id="shipmentId">${shipment._id}</i> от ${date}</p>
+  return `<p class="h2 p-1">Сборочный лист № <i id="shipmentId">${
+    shipment._id
+  }</i> от ${date}</p>
             <p class="h6 pt-2">Дата и время: ${dayNow}.${monthNow}.${yearNow} ${hourNow}:${minutesNow}:${secondsNow}</p>
             <p class="h6 pt-1">Грузополучатель: ${shipment.id_consignee}</p>
             <p class="h6 pt-1">Адрес грузополучателя: ${consignee.address}</p>
-            ${(role.hasClass('checker') || role.hasClass('admin')) ? partForChecker : ''}`;
+            ${
+              role.hasClass('checker') || role.hasClass('admin')
+                ? partForChecker
+                : ''
+            }`;
 }
 
 function getId() {
-    const id = parseInt($('#shipmentId').html());
-    const status = $('#status').val();
+  const id = parseInt($('#shipmentId').html());
+  const status = $('#status').val();
 
-    console.log({ id, status })
-    ChangeStatus(id, status);
-    window.location.reload();
+  console.log({ id, status });
+  ChangeStatus(id, status);
+  window.location.reload();
 }
 
 async function GetConsignee(id) {
-    const response = await fetch(`/api/consignees/${id}`);
-    const consignee = await response.json();
-    return consignee;
+  const response = await fetch(`/api/consignees/${id}`);
+  const consignee = await response.json();
+  return consignee;
 }
 
 async function GetWarehouse(id) {
-    const response = await fetch(`/api/warehouses/${id}`);
-    const warehouse = await response.json();
-    return warehouse;
+  const response = await fetch(`/api/warehouses/${id}`);
+  const warehouse = await response.json();
+  return warehouse;
 }
 
 function GetShipmentProducts(id, shipment) {
-    $.ajax({
-        url: `/api/shipment/${id}/products`,
-        type: "GET",
-        contentType: "application/json",
-        success: async function (products) {
-            const warehouse = await GetWarehouse(shipment.id_warehouse);
-            const consignee = await GetConsignee(shipment.id_consignee);
-            let rows = '';
-            const ps = shipmentTitle(shipment, consignee);
+  $.ajax({
+    url: `/api/shipment/${id}/products`,
+    type: 'GET',
+    contentType: 'application/json',
+    success: async function(products) {
+      const warehouse = await GetWarehouse(shipment.id_warehouse);
+      const consignee = await GetConsignee(shipment.id_consignee);
+      let rows = '';
+      const ps = shipmentTitle(shipment, consignee);
 
-            $.each(products, function (index, product) {
-                rows += rowForShipmentDataTable(product, shipment, warehouse);
-            });
+      $.each(products, function(index, product) {
+        rows += rowForShipmentDataTable(product, shipment, warehouse);
+      });
 
-            $(".shipment_title").append(ps);
-            $("#shipmentDataTable tbody").append(rows);
-        }
-    });
+      $('.shipment_title').append(ps);
+      $('#shipmentDataTable tbody').append(rows);
+    }
+  });
 }
 
 async function GetShipment(id) {
-    // $.ajax({
-    //     url: "/api/shipments/" + id,
-    //     type: "GET",
-    //     contentType: "application/json",
-    //     success: function (shipment) {
-    //         GetShipmentProducts(shipment._id, shipment);
-    //     }
-    // });
+  // $.ajax({
+  //     url: "/api/shipments/" + id,
+  //     type: "GET",
+  //     contentType: "application/json",
+  //     success: function (shipment) {
+  //         GetShipmentProducts(shipment._id, shipment);
+  //     }
+  // });
 
-    const shipment = await fetch(`/api/shipments/${id}`).then(res => res.json());
+  const shipment = await fetch(`/api/shipments/${id}`).then(res => res.json());
 
-    if (shipment) {
-        const shipmentProducts = await fetch(`/api/shipment/${shipment._id}/products`).then(res => res.json());
-        const warehouse = await GetWarehouse(shipment.id_warehouse);
-        const consignee = await GetConsignee(shipment.id_consignee);
+  if (shipment) {
+    const shipmentProducts = await fetch(
+      `/api/shipment/${shipment._id}/products`
+    ).then(res => res.json());
+    const warehouse = await GetWarehouse(shipment.id_warehouse);
+    const consignee = await GetConsignee(shipment.id_consignee);
 
-        let rows = '';
-        const title = shipmentTitle(shipment, consignee);
+    let rows = '';
+    const title = shipmentTitle(shipment, consignee);
 
-        $.each(shipmentProducts, function (index, product) {
-            rows += rowForShipmentDataTable(product, shipment, warehouse);
-        });
+    $.each(shipmentProducts, function(index, product) {
+      rows += rowForShipmentDataTable(product, shipment, warehouse);
+    });
 
-        $(".shipment_title").append(title);
-        $("#shipmentDataTable tbody").append(rows);
-    }
+    $('.shipment_title').append(title);
+    $('#shipmentDataTable tbody').append(rows);
+  }
 }
 
 $('#btnSelected').click(() => {
-    $('#code_car').html(`${Math.floor(new Date().getTime() / 100 - 15500000000)}`);
-})
+  $('#code_car').html(
+    `${Math.floor(new Date().getTime() / 100 - 15500000000)}`
+  );
+});
 
 function UpdateShipmentStatus(shipmentIds, status) {
-    $.ajax({
-        url: "/api/shipments",
-        contentType: "application/json",
-        method: "PUT",
-        data: JSON.stringify({
-            ids: shipmentIds,
-            status: status
-        }),
-    });
+  $.ajax({
+    url: '/api/shipments',
+    contentType: 'application/json',
+    method: 'PUT',
+    data: JSON.stringify({
+      ids: shipmentIds,
+      status: status
+    })
+  });
 }
 
 $('#btnCreate').click(() => {
-    const rowsMainDataTable = document.querySelectorAll('.mainDataTable tbody tr');
-    let ids_shipment = [];
-    const status = 'Отгружена';
-    for (const row of rowsMainDataTable) {
-        if (row.classList.contains('green-bg')) {
-            ids_shipment.push(parseInt(row.children[3].innerHTML));
-        }
+  const rowsMainDataTable = document.querySelectorAll(
+    '.mainDataTable tbody tr'
+  );
+  let ids_shipment = [];
+  const status = 'Отгружена';
+  for (const row of rowsMainDataTable) {
+    if (row.classList.contains('green-bg')) {
+      ids_shipment.push(parseInt(row.children[3].innerHTML));
     }
+  }
 
-    if (ids_shipment.length == 0) {
-        alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
-    } else {
-        UpdateShipmentStatus(ids_shipment, status);
-        const codeCar = $('#code_car').html();
-        CreateShipmentToTTN(codeCar, ids_shipment);
-        window.location.reload();
-    }
-})
+  if (ids_shipment.length == 0) {
+    alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
+  } else {
+    UpdateShipmentStatus(ids_shipment, status);
+    const codeCar = $('#code_car').html();
+    CreateShipmentToTTN(codeCar, ids_shipment);
+    window.location.reload();
+  }
+});
 
 function CreateShipmentToTTN(id, shipment_ids) {
-    $.ajax({
-        url: "/api/shipmentstottn",
-        contentType: "application/json",
-        method: "POST",
-        data: JSON.stringify({
-            id: id,
-            shipments: shipment_ids,
-        }),
-        success: function (result) {
-            console.log(result);
-        },
-    })
+  $.ajax({
+    url: '/api/shipmentstottn',
+    contentType: 'application/json',
+    method: 'POST',
+    data: JSON.stringify({
+      id: id,
+      shipments: shipment_ids
+    }),
+    success: function(result) {
+      console.log(result);
+    }
+  });
 }
 
 function ChangeStatus(id, status) {
-    $.ajax({
-        url: "/api/shipment",
-        contentType: "application/json",
-        method: "PUT",
-        data: JSON.stringify({
-            id: id,
-            status: status
-        }),
-    });
+  $.ajax({
+    url: '/api/shipment',
+    contentType: 'application/json',
+    method: 'PUT',
+    data: JSON.stringify({
+      id: id,
+      status: status
+    })
+  });
 }
 
 function DeleteShipment(id) {
-    $.ajax({
-        url: "/api/shipments/" + id,
-        contentType: "application/json",
-        method: "DELETE",
-        success: function (shipment) {
-            $(`tr[data-rowid="${shipment._id}"]`).remove();
-        }
-    })
+  $.ajax({
+    url: '/api/shipments/' + id,
+    contentType: 'application/json',
+    method: 'DELETE',
+    success: function(shipment) {
+      $(`tr[data-rowid="${shipment._id}"]`).remove();
+    }
+  });
 }
 
 $('#from').on('input', () => {
-    let trs = '';
+  let trs = '';
 
-    let value = $('#from').val();
+  let value = $('#from').val();
 
-    for (const row of ROWS) {
-        if (row.children[1].innerHTML.search(value) != -1) {
-            trs += row.outerHTML;
-        }
+  for (const row of ROWS) {
+    if (row.children[1].innerHTML.search(value) != -1) {
+      trs += row.outerHTML;
     }
+  }
 
-    $(".mainDataTable tbody").html('');
-    $(".mainDataTable tbody").append(trs);
-    markShipmentsAndSelectShipment();
-})
+  $('.mainDataTable tbody').html('');
+  $('.mainDataTable tbody').append(trs);
+  markShipmentsAndSelectShipment();
+});
 
 $('#to').on('input', () => {
-    let trs = '';
+  let trs = '';
 
-    let value = $('#to').val();
+  let value = $('#to').val();
 
-    for (const row of ROWS) {
-        if (row.children[2].innerHTML.search(value) != -1) {
-            trs += row.outerHTML;
-        }
+  for (const row of ROWS) {
+    if (row.children[2].innerHTML.search(value) != -1) {
+      trs += row.outerHTML;
     }
+  }
 
-    $(".mainDataTable tbody").html('');
-    $(".mainDataTable tbody").append(trs);
-    markShipmentsAndSelectShipment();
-})
+  $('.mainDataTable tbody').html('');
+  $('.mainDataTable tbody').append(trs);
+  markShipmentsAndSelectShipment();
+});
 
 function toDateMillisec(dateString) {
-    const splitDate = dateString.split('.');
-    return Date.parse(new Date(splitDate[2], splitDate[1] - 1, splitDate[0]));
+  const splitDate = dateString.split('.');
+  return Date.parse(new Date(splitDate[2], splitDate[1] - 1, splitDate[0]));
 }
 
 $('#btnShippingList').on('click', () => {
-    const rowsMainDataTable = document.querySelectorAll('.mainDataTable tbody tr');
-    let req = '';
+  const rowsMainDataTable = document.querySelectorAll(
+    '.mainDataTable tbody tr'
+  );
+  let req = '';
 
-    for (const row of rowsMainDataTable) {
-        if (row.classList.contains('green-bg')) {
-            req += `id=${row.children[3].innerHTML}&`
-        }
+  for (const row of rowsMainDataTable) {
+    if (row.classList.contains('green-bg')) {
+      req += `id=${row.children[3].innerHTML}&`;
     }
+  }
 
-    if (req != '') {
-        window.open(`/templates/shipping-list.pdf?${req}`);
-    } else {
-        alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
-    }
+  if (req != '') {
+    window.open(`/templates/shipping-list.pdf?${req}`);
+  } else {
+    alert('Выберите определённые сборки с помощью Ctrl + ЛКМ');
+  }
 });
 
 $('.datepicker-here').datepicker({
-    onSelect: () => {
-        let trs = '';
-        const startDate = $('#startDate').val();
-        const finishDate = $('#finishDate').val();
-        const from = startDate == '' ? Date.parse('01 Jan 1970 00:00:00 GMT') : toDateMillisec(startDate);
-        const to = finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
+  onSelect: () => {
+    let trs = '';
+    const startDate = $('#startDate').val();
+    const finishDate = $('#finishDate').val();
+    const from =
+      startDate == ''
+        ? Date.parse('01 Jan 1970 00:00:00 GMT')
+        : toDateMillisec(startDate);
+    const to =
+      finishDate == '' ? Date.parse(new Date()) : toDateMillisec(finishDate);
 
-        for (const row of ROWS) {
-
-            if (from <= toDateMillisec(row.children[0].innerHTML) && to >= toDateMillisec(row.children[0].innerHTML)) {
-                trs += row.outerHTML;
-            }
-        }
-
-        $(".mainDataTable tbody").html('');
-        $(".mainDataTable tbody").append(trs);
-        markShipmentsAndSelectShipment();
+    for (const row of ROWS) {
+      if (
+        from <= toDateMillisec(row.children[0].innerHTML) &&
+        to >= toDateMillisec(row.children[0].innerHTML)
+      ) {
+        trs += row.outerHTML;
+      }
     }
+
+    $('.mainDataTable tbody').html('');
+    $('.mainDataTable tbody').append(trs);
+    markShipmentsAndSelectShipment();
+  }
 });

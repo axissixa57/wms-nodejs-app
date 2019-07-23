@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const ShipmentSchema = new Schema({
+const ShipmentSchema = new Schema(
+  {
     _id: { type: Number },
     date: { type: Date },
     status: { type: String },
@@ -12,6 +13,8 @@ const ShipmentSchema = new Schema({
     products: { type: Array },
     pallet: { type: Number },
     total_weight: { type: Number }
-}, { versionKey: false });
+  },
+  { versionKey: false }
+);
 
 export const Shipment = mongoose.model('Shipment', ShipmentSchema);

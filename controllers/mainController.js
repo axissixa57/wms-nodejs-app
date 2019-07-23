@@ -1,5 +1,10 @@
-import { access } from '../library/helpers'
+import { access } from '../library/helpers';
 
 export function getMainPage(req, res) {
-    access(res, ['admin', 'logist', 'checker', 'economist'], 'main.ejs', 'Главная');
-};
+  access(
+    res,
+    ['admin', 'logist', 'checker', 'economist'],
+    'main.ejs',
+    'Главная'
+  );
+}

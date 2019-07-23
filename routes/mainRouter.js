@@ -4,6 +4,6 @@ import * as mainController from '../controllers/mainController';
 
 const mainRouter = express.Router();
 
-mainRouter.get("/", authMiddleware.redirectLogin, mainController.getMainPage);
+mainRouter.get('/', authMiddleware.redirectLogin, mainController.getMainPage);
 
 export { mainRouter };

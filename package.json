@@ -4,7 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec babel-node app.js"
+    "start": "nodemon --exec babel-node app.js",
+    "lint": "eslint ./**/*.js",
+    "prettier": "prettier --write ./**/*.js",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -21,14 +26,18 @@
     "jquery": "^3.4.1",
     "mongoose": "^5.5.11",
     "morgan": "^1.9.1",
+    "chalk": "^2.4.2",
     "popper.js": "^1.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
-    "chalk": "^2.4.2",
-    "nodemon": "^1.19.1"
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "prettier": "1.18.2",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   },
-  "Error: listen EADDRINUSE: address already in use :::3000": "Run cmd.exe as 'Administrator': C:\\Windows\\System32>taskkill /F /IM node.exe"
+  "Error: listen EADDRINUSE: address already in use :::3000": "Run cmd.exe: > taskkill /F /IM node.exe"
 }

@@ -2,9 +2,9 @@ let ROWS = '';
 let lineNumber = 0;
 
 function row(product) {
-    const role = $('#productDataTable > tbody');
+  const role = $('#productDataTable > tbody');
 
-    const partForAdmin = `<td>
+  const partForAdmin = `<td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Действие
@@ -16,7 +16,7 @@ function row(product) {
                             </div>
                         </td>`;
 
-    return `<tr role="row" data-rowid="${product._id}">
+  return `<tr role="row" data-rowid="${product._id}">
                 <td>${++lineNumber}</td>
                 <td>${product._id}</td>
                 <td>${product.category}</td> 
@@ -24,139 +24,158 @@ function row(product) {
                 <td>${product.unit}</td> 
                 <td>${product.weight}</td> 
                 <td>${product.cost}</td> 
-                ${(role.hasClass('admin')) ? partForAdmin : ''};
+                ${role.hasClass('admin') ? partForAdmin : ''};
             </tr>`;
 }
 
 function GetProduct(id) {
-    $.ajax({
-        url: "/api/products/" + id,
-        type: "GET",
-        contentType: "application/json",
-        success: function (product) {
-            $("#EditProductId").val(`${product._id}`);
-            $("#EditProductCategory option:first-child").html(`${product.category}`);
-            $("#EditProductName").val(`${product.name}`);
-            $("#EditProductUnit option:first-child").html(`${product.unit}`);
-            $("#EditProductWeight").val(`${product.weight}`);
-            $("#EditProductCost").val(`${product.cost}`);
-        }
-    });
-};
-
-(function GetProducts() {
-    $.ajax({
-        url: "/api/products",
-        type: "GET",
-        contentType: "application/json",
-        success: function (products) {
-            let trs = "";
-            $.each(products, function (index, product) {
-                trs += row(product);
-            })
-            $("#productDataTable tbody").append(trs);
-            ROWS = $("#productDataTable tbody tr")
-
-            $("body").on("click", ".editLink", function () {
-                const id = $(this).data("id");
-                GetProduct(id);
-            })
-
-            $("body").on("click", ".removeLink", function () {
-                const id = $(this).data("id");
-                DeleteProduct(id);
-            })
-        }
-    });
-})();
-
-function CreateProduct(productID, productCategory, productName, productUnit, productWeight, productCost) {
-    $.ajax({
-        url: "/api/products",
-        contentType: "application/json",
-        method: "POST",
-        data: JSON.stringify({
-            id: productID,
-            category: productCategory,
-            name: productName,
-            unit: productUnit,
-            weight: productWeight,
-            cost: productCost,
-        }),
-        success: function (product) {
-            if (typeof product == "object") {
-                //$('#btnSave').attr( "data-dismiss", "modal" );
-                window.location.reload();
-            } else if (typeof product == "string") {
-                $('#productId').addClass('is-invalid');
-            }
-        }
-    })
+  $.ajax({
+    url: '/api/products/' + id,
+    type: 'GET',
+    contentType: 'application/json',
+    success: function(product) {
+      $('#EditProductId').val(`${product._id}`);
+      $('#EditProductCategory option:first-child').html(`${product.category}`);
+      $('#EditProductName').val(`${product.name}`);
+      $('#EditProductUnit option:first-child').html(`${product.unit}`);
+      $('#EditProductWeight').val(`${product.weight}`);
+      $('#EditProductCost').val(`${product.cost}`);
+    }
+  });
 }
 
-function EditProduct(productID, productCategory, productName, productUnit, productWeight, productCost) {
-    $.ajax({
-        url: "/api/products",
-        contentType: "application/json",
-        method: "PUT",
-        data: JSON.stringify({
-            id: productID,
-            category: productCategory,
-            name: productName,
-            unit: productUnit,
-            weight: productWeight,
-            cost: productCost,
-        }),
+(function GetProducts() {
+  $.ajax({
+    url: '/api/products',
+    type: 'GET',
+    contentType: 'application/json',
+    success: function(products) {
+      let trs = '';
+      $.each(products, function(index, product) {
+        trs += row(product);
+      });
+      $('#productDataTable tbody').append(trs);
+      ROWS = $('#productDataTable tbody tr');
+
+      $('body').on('click', '.editLink', function() {
+        const id = $(this).data('id');
+        GetProduct(id);
+      });
+
+      $('body').on('click', '.removeLink', function() {
+        const id = $(this).data('id');
+        DeleteProduct(id);
+      });
+    }
+  });
+})();
+
+function CreateProduct(
+  productID,
+  productCategory,
+  productName,
+  productUnit,
+  productWeight,
+  productCost
+) {
+  $.ajax({
+    url: '/api/products',
+    contentType: 'application/json',
+    method: 'POST',
+    data: JSON.stringify({
+      id: productID,
+      category: productCategory,
+      name: productName,
+      unit: productUnit,
+      weight: productWeight,
+      cost: productCost
+    }),
+    success: function(product) {
+      if (typeof product == 'object') {
+        //$('#btnSave').attr( "data-dismiss", "modal" );
+        window.location.reload();
+      } else if (typeof product == 'string') {
+        $('#productId').addClass('is-invalid');
+      }
+    }
+  });
+}
+
+function EditProduct(
+  productID,
+  productCategory,
+  productName,
+  productUnit,
+  productWeight,
+  productCost
+) {
+  $.ajax({
+    url: '/api/products',
+    contentType: 'application/json',
+    method: 'PUT',
+    data: JSON.stringify({
+      id: productID,
+      category: productCategory,
+      name: productName,
+      unit: productUnit,
+      weight: productWeight,
+      cost: productCost
     })
+  });
 }
 
 function DeleteProduct(id) {
-    $.ajax({
-        url: "/api/products/" + id,
-        contentType: "application/json",
-        method: "DELETE",
-        success: function (product) {
-            $(`tr[data-rowid="${product._id}"]`).remove();
-        }
-    })
+  $.ajax({
+    url: '/api/products/' + id,
+    contentType: 'application/json',
+    method: 'DELETE',
+    success: function(product) {
+      $(`tr[data-rowid="${product._id}"]`).remove();
+    }
+  });
 }
 
 $('#btnSave').click(() => {
-    const id = $('#productId').val();
-    const category = $('#productCategory').val();
-    const name = $('#productName').val();
-    const unit = $('#productUnit').val();
-    const weight = $('#productWeight').val();
-    const cost = $('#productCost').val();
-    CreateProduct(id, category, name, unit, weight, cost);
+  const id = $('#productId').val();
+  const category = $('#productCategory').val();
+  const name = $('#productName').val();
+  const unit = $('#productUnit').val();
+  const weight = $('#productWeight').val();
+  const cost = $('#productCost').val();
+  CreateProduct(id, category, name, unit, weight, cost);
 });
 
 $('#btnEdit').click(() => {
-    const id = $('#EditProductId').val();
-    const category = $('#EditProductCategory').val() == null ? $('#EditProductCategory option:first-child').html() : $('#EditProductCategory').val();
-    const name = $('#EditProductName').val();
-    const unit = $('#EditProductUnit').val() == null ? $('#EditProductUnit option:first-child').html() : $('#EditProductUnit').val();
-    const weight = $('#EditProductWeight').val(); 
-    const cost = $('#EditProductCost').val();
-    EditProduct(id, category, name, unit, weight, cost);
-    window.location.reload();
+  const id = $('#EditProductId').val();
+  const category =
+    $('#EditProductCategory').val() == null
+      ? $('#EditProductCategory option:first-child').html()
+      : $('#EditProductCategory').val();
+  const name = $('#EditProductName').val();
+  const unit =
+    $('#EditProductUnit').val() == null
+      ? $('#EditProductUnit option:first-child').html()
+      : $('#EditProductUnit').val();
+  const weight = $('#EditProductWeight').val();
+  const cost = $('#EditProductCost').val();
+  EditProduct(id, category, name, unit, weight, cost);
+  window.location.reload();
 });
 
 $('#inputSearch').on('input', () => {
-    let trs = '';
+  let trs = '';
 
-    let value = $('#inputSearch').val();
+  let value = $('#inputSearch').val();
 
-    for (const row of ROWS) {
-
-        for (let i = 1; i < row.children.length; i++) {
-            if (row.children[i].innerHTML.search(value) != -1) {
-                trs += row.outerHTML;
-                break;
-            }
-        }
+  for (const row of ROWS) {
+    for (let i = 1; i < row.children.length; i++) {
+      if (row.children[i].innerHTML.search(value) != -1) {
+        trs += row.outerHTML;
+        break;
+      }
     }
+  }
 
-    $("#productDataTable tbody").html('');
-    $("#productDataTable tbody").append(trs);
-})
+  $('#productDataTable tbody').html('');
+  $('#productDataTable tbody').append(trs);
+});

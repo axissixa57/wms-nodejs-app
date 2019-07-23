@@ -5,8 +5,16 @@ import * as logController from '../controllers/logController';
 const logRouter = express.Router();
 
 logRouter.get('/', authMiddleware.redirectMain, logController.getLoginPage);
-logRouter.post('/', authMiddleware.redirectMain, logController.postDataFromLoginPage);
+logRouter.post(
+  '/',
+  authMiddleware.redirectMain,
+  logController.postDataFromLoginPage
+);
 
-logRouter.get('/logout', authMiddleware.redirectLogin, logController.exitFromApp);
+logRouter.get(
+  '/logout',
+  authMiddleware.redirectLogin,
+  logController.exitFromApp
+);
 
 export { logRouter };
