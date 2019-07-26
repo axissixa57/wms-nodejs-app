@@ -8,6 +8,10 @@ apiRouter.get('/products', apiController.getProducts);
 apiRouter.get('/products/cosmetics', apiController.getCosmeticProducts);
 apiRouter.get('/products/meat', apiController.getMeatProducts);
 apiRouter.get('/products/marine', apiController.getMarineProducts);
+
+apiRouter.get('/products/dried-fruits', apiController.getDriedFruitsProducts);
+apiRouter.get('/products/drinks', apiController.getDrinkingProducts);
+
 apiRouter.get('/products/:id', apiController.getProductById);
 apiRouter.post('/products', apiController.createProduct);
 apiRouter.delete('/products/:id', apiController.deleteProduct);

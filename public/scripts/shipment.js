@@ -10,10 +10,16 @@
   const marineProducts = await fetch('/api/products/marine').then(res =>
     res.json()
   );
+  const driedFruitsProducts = await fetch('/api/products/dried-fruits').then(res =>
+    res.json()
+  );
+  const drinkingProducts = await fetch('/api/products/drinks').then(res =>
+    res.json()
+  );
 
   if (warehouses) {
     let tds = '';
-    $.each(warehouses, function(index, warehouse) {
+    $.each(warehouses, function (index, warehouse) {
       tds += rowForReference(warehouse);
     });
     $('#all_warehouses tbody').append(tds);
@@ -36,7 +42,7 @@
   if (consignees) {
     let tds = '';
 
-    $.each(consignees, function(index, consignee) {
+    $.each(consignees, function (index, consignee) {
       tds += rowForReference(consignee);
     });
 
@@ -59,7 +65,7 @@
 
   if (cosmeticsProducts) {
     let trs = '';
-    $.each(cosmeticsProducts, function(index, product) {
+    $.each(cosmeticsProducts, function (index, product) {
       trs += rowForProductCategoryTable(product);
     });
 
@@ -79,7 +85,7 @@
 
   if (meatProducts) {
     let trs = '';
-    $.each(meatProducts, function(index, product) {
+    $.each(meatProducts, function (index, product) {
       trs += rowForProductCategoryTable(product);
     });
     $('#meatDataTable tbody').append(trs);
@@ -96,7 +102,7 @@
 
   if (marineProducts) {
     let trs = '';
-    $.each(marineProducts, function(index, product) {
+    $.each(marineProducts, function (index, product) {
       trs += rowForProductCategoryTable(product);
     });
     $('#marineDataTable tbody').append(trs);
@@ -108,6 +114,41 @@
     for (let i = 0; i < marineDataTablebleTrs.length; i++) {
       marineDataTablebleTrs[i].addEventListener('click', () => {
         const code = parseInt(marineDataTablebleTrs[i].children[1].innerHTML);
+        GetProduct(code);
+      });
+    }
+  }
+
+  if (driedFruitsProducts) {
+
+    let trs = "";
+    $.each(driedFruitsProducts, function (index, product) {
+      trs += rowForProductCategoryTable(product);
+    })
+    $("#dried-fruitsDataTable tbody").append(trs);
+
+    const driedFruitsDataTablebleTrs = document.querySelectorAll('#dried-fruitsDataTable tr');
+
+    for (let i = 0; i < driedFruitsDataTablebleTrs.length; i++) {
+      driedFruitsDataTablebleTrs[i].addEventListener('click', () => {
+        const code = parseInt(driedFruitsDataTablebleTrs[i].children[1].innerHTML);
+        GetProduct(code);
+      });
+    }
+  }
+
+  if (drinkingProducts) {
+    let trs = "";
+    $.each(drinkingProducts, function (index, product) {
+      trs += rowForProductCategoryTable(product);
+    })
+    $("#drinksDataTable tbody").append(trs);
+
+    const drinksDataTablebleTrs = document.querySelectorAll('#drinksDataTable tr');
+
+    for (let i = 0; i < drinksDataTablebleTrs.length; i++) {
+      drinksDataTablebleTrs[i].addEventListener('click', () => {
+        const code = parseInt(drinksDataTablebleTrs[i].children[1].innerHTML);
         GetProduct(code);
       });
     }
@@ -161,7 +202,7 @@ function GetProduct(id) {
     url: '/api/products/' + id,
     type: 'GET',
     contentType: 'application/json',
-    success: function(product) {
+    success: function (product) {
       $('.mainTableOfGoods tbody').append(row(product));
     }
   });
@@ -288,7 +329,7 @@ function CreateShipment(
       pallet: pallet,
       total_weight: total_weight
     }),
-    success: function(shipment) {
+    success: function (shipment) {
       $('.toast').toast('show');
     }
   });
@@ -301,7 +342,7 @@ function dateToRUFormat(date) {
   return (newdate = dateRU.join(''));
 }
 
-$('form').submit(function(e) {
+$('form').submit(function (e) {
   e.preventDefault();
   const id = this.elements['shipment_id'].value;
   const date = dateToRUFormat(this.elements['date'].value);
@@ -340,10 +381,10 @@ function GetConsignees() {
     url: '/api/consignees',
     type: 'GET',
     contentType: 'application/json',
-    success: function(consignees) {
+    success: function (consignees) {
       let tds = '';
 
-      $.each(consignees, function(index, consignee) {
+      $.each(consignees, function (index, consignee) {
         tds += rowForReference(consignee);
       });
 
@@ -373,9 +414,9 @@ function GetWarehouses() {
     url: '/api/warehouses',
     type: 'GET',
     contentType: 'application/json',
-    success: function(warehouses) {
+    success: function (warehouses) {
       let tds = '';
-      $.each(warehouses, function(index, warehouse) {
+      $.each(warehouses, function (index, warehouse) {
         tds += rowForReference(warehouse);
       });
       $('#all_warehouses tbody').append(tds);
@@ -411,9 +452,9 @@ function GetCosmeticProducts() {
     url: '/api/products/cosmetics',
     type: 'GET',
     contentType: 'application/json',
-    success: function(products) {
+    success: function (products) {
       let trs = '';
-      $.each(products, function(index, product) {
+      $.each(products, function (index, product) {
         trs += rowForProductCategoryTable(product);
       });
       $('#cosmeticsDataTable tbody').append(trs);
@@ -437,9 +478,9 @@ function GetMeatProducts() {
     url: '/api/products/meat',
     type: 'GET',
     contentType: 'application/json',
-    success: function(products) {
+    success: function (products) {
       let trs = '';
-      $.each(products, function(index, product) {
+      $.each(products, function (index, product) {
         trs += rowForProductCategoryTable(product);
       });
       $('#meatDataTable tbody').append(trs);
@@ -463,9 +504,9 @@ function GetMarineProducts() {
     url: '/api/products/marine',
     type: 'GET',
     contentType: 'application/json',
-    success: function(products) {
+    success: function (products) {
       let trs = '';
-      $.each(products, function(index, product) {
+      $.each(products, function (index, product) {
         trs += rowForProductCategoryTable(product);
       });
       $('#marineDataTable tbody').append(trs);

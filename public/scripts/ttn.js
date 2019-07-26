@@ -326,27 +326,34 @@ $('#btnEnter').click(() => {
   }
 
   if (id != 0) {
-    EditTTN(
-      id,
-      docId,
-      docDate,
+    const areThereProductsInWarehouse = await CheckProducts(
       docIdWarehouse,
-      docIdConsignee,
-      docComment,
-      docCarTripTicketId,
-      docCarOrganization,
-      docCarBrand,
-      docCarStateNumber,
-      docCarDriverName,
-      docCarDriverId,
-      docProducts,
-      codeCar,
-      docTotalWeight,
-      docTotalCost,
-      docStatus
+      docProducts
     );
 
-    EditProductQuantityOfWarehouse(docIdWarehouse, warehouseProducts);
+    if (areThereProductsInWarehouse.message == 'Success') {
+      EditTTN(
+        id,
+        docId,
+        docDate,
+        docIdWarehouse,
+        docIdConsignee,
+        docComment,
+        docCarTripTicketId,
+        docCarOrganization,
+        docCarBrand,
+        docCarStateNumber,
+        docCarDriverName,
+        docCarDriverId,
+        docProducts,
+        codeCar,
+        docTotalWeight,
+        docTotalCost,
+        docStatus
+      );
+
+      EditProductQuantityOfWarehouse(docIdWarehouse, docIdConsignee, warehouseProducts);
+    }
   }
 });
 
@@ -467,6 +474,12 @@ async function bootstrap(idWarehouse, idConsignee) {
   const marineProducts = await fetch('/api/products/marine').then(res =>
     res.json()
   );
+  const driedFruitsProducts = await fetch('/api/products/dried-fruits').then(res =>
+    res.json()
+  );
+  const drinkingProducts = await fetch('/api/products/drinks').then(res =>
+    res.json()
+  );
 
   if (warehouses) {
     let tds = '';
@@ -570,6 +583,41 @@ async function bootstrap(idWarehouse, idConsignee) {
     }
   }
 
+  if (driedFruitsProducts) {
+
+    let trs = "";
+    $.each(driedFruitsProducts, function (index, product) {
+      trs += rowForProductCategoryTable(product);
+    })
+    $("#dried-fruitsDataTable tbody").append(trs);
+
+    const driedFruitsDataTablebleTrs = document.querySelectorAll('#dried-fruitsDataTable tr');
+
+    for (let i = 0; i < driedFruitsDataTablebleTrs.length; i++) {
+      driedFruitsDataTablebleTrs[i].addEventListener('click', () => {
+        const code = parseInt(driedFruitsDataTablebleTrs[i].children[1].innerHTML);
+        GetProduct(code);
+      });
+    }
+  }
+
+  if (drinkingProducts) {
+    let trs = "";
+    $.each(drinkingProducts, function (index, product) {
+      trs += rowForProductCategoryTable(product);
+    })
+    $("#drinksDataTable tbody").append(trs);
+
+    const drinksDataTablebleTrs = document.querySelectorAll('#drinksDataTable tr');
+
+    for (let i = 0; i < drinksDataTablebleTrs.length; i++) {
+      drinksDataTablebleTrs[i].addEventListener('click', () => {
+        const code = parseInt(drinksDataTablebleTrs[i].children[1].innerHTML);
+        GetProduct(code);
+      });
+    }
+  }
+
   if (idWarehouse && idConsignee) {
     const warehouse = await fetch(`/api/warehouses/${idWarehouse}`).then(res =>
       res.json()
@@ -585,13 +633,21 @@ async function bootstrap(idWarehouse, idConsignee) {
     } else {
       const consignee = await fetch(`/api/consignees/${idConsignee}`).then(
         res => res.json()
-      );
-      $('#consignee_address').val(`${consignee.address}`);
+      ).catch(err => console.log(err));
+      if (!consignee) {
+        const warehouseConsignee = await fetch(`/api/warehouses/${idConsignee}`).then(res =>
+          res.json()
+        );
+
+        $('#consignee_address').val(`${warehouseConsignee.address}`);
+      } else {
+        $('#consignee_address').val(`${consignee.address}`);
+      }
     }
   }
 }
 
-function CreateTTN(
+async function CreateTTN(
   docId,
   docDate,
   docIdWarehouse,
@@ -638,6 +694,10 @@ function CreateTTN(
     }
   });
 }
+
+// const test = async () => {
+//   const ttn =  await fetch('/api/ttn').then(res => res.json());
+// }
 
 function EditTTN(
   id,
@@ -795,41 +855,23 @@ function GetCosmeticProducts() {
   $.ajax({
     url: '/api/products/cosmetics',
     type: 'GET',
-    contentType: 'application/json'
-    // success: function (products) {
-    //     let trs = "";
-    //     $.each(products, function (index, product) {
-    //         trs += rowForProductCategoryTable(product);
-    //     })
+    contentType: 'application/json',
+    success: function (products) {
+      let trs = "";
+      $.each(products, function (index, product) {
+        trs += rowForProductCategoryTable(product);
+      })
 
-    //     $("#cosmeticsDataTable tbody").append(trs);
+      $("#cosmeticsDataTable tbody").append(trs);
 
-    //     const cosmeticsDataTableTrs = document.querySelectorAll('#cosmeticsDataTable tr');
+      const cosmeticsDataTableTrs = document.querySelectorAll('#cosmeticsDataTable tr');
 
-    //     for (let i = 0; i < cosmeticsDataTableTrs.length; i++) {
-    //         cosmeticsDataTableTrs[i].addEventListener('click', () => {
-    //             const code = parseInt(cosmeticsDataTableTrs[i].children[1].innerHTML);
-    //             GetProduct(code);
-    //         });
-    //     }
-    // }
-  }).then(products => {
-    let trs = '';
-    $.each(products, function (index, product) {
-      trs += rowForProductCategoryTable(product);
-    });
-
-    $('#cosmeticsDataTable tbody').append(trs);
-
-    const cosmeticsDataTableTrs = document.querySelectorAll(
-      '#cosmeticsDataTable tr'
-    );
-
-    for (let i = 0; i < cosmeticsDataTableTrs.length; i++) {
-      cosmeticsDataTableTrs[i].addEventListener('click', () => {
-        const code = parseInt(cosmeticsDataTableTrs[i].children[1].innerHTML);
-        GetProduct(code);
-      });
+      for (let i = 0; i < cosmeticsDataTableTrs.length; i++) {
+        cosmeticsDataTableTrs[i].addEventListener('click', () => {
+          const code = parseInt(cosmeticsDataTableTrs[i].children[1].innerHTML);
+          GetProduct(code);
+        });
+      }
     }
   });
 }
@@ -908,7 +950,7 @@ function GetConsignee(id) {
   });
 }
 
-function fromOneWarehouseToAnother( 
+function fromOneWarehouseToAnother(
   docWarehouseId,
   docConsigneeId,
   docProducts
@@ -930,15 +972,21 @@ function fromOneWarehouseToAnother(
   });
 }
 
-function EditProductQuantityOfWarehouse(docWarehouseId, docProducts) {
+function EditProductQuantityOfWarehouse(docWarehouseId, docWarehouseConsigneeId, docProducts) {
   $.ajax({
     url: '/api/warehouse/editquantity',
     contentType: 'application/json',
     method: 'PUT',
     data: JSON.stringify({
       id_warehouse: docWarehouseId,
+      id_consignee: docWarehouseConsigneeId,
       products: docProducts
-    })
+    }),
+    success: function (string) {
+      if (string != 'Successful update') {
+        alert(string);
+      }
+    }
   });
 }
 

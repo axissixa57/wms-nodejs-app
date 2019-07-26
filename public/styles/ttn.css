@@ -26,6 +26,8 @@
 #cosmeticsDataTable tbody tr,
 #meatDataTable tbody tr,
 #marineDataTable tbody tr,
+#dried-fruitsDataTable tbody tr,
+#drinksDataTable tbody tr,
 #all_counterAgents tbody tr,
 #all_consignees tbody tr {
     cursor: pointer;
@@ -33,6 +35,8 @@
 #cosmeticsDataTable tbody tr:hover,
 #meatDataTable tbody tr:hover,
 #marineDataTable tbody tr:hover,
+#dried-fruitsDataTable tbody tr:hover,
+#drinksDataTable tbody tr:hover,
 #all_counterAgents tbody tr:hover,
 #all_consignees tbody tr:hover {
     background-color: #007bff;
