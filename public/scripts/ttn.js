@@ -246,7 +246,7 @@ $('.btnDelete').on('click', () => {
   }
 });
 
-$('#btnEnter').click(() => {
+$('#btnEnter').click(async () => {
   $('#btnEnter').toggleClass('btn-success');
   $('#btnEnter').toggleClass('btn-danger');
 
