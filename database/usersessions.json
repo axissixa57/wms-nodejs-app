@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5d20b696a8e5593b28ab46dd"},"timestamp":{"$date":{"$numberLong":"1562424879017"}},"isDeleted":false,"userId":"5d20a21ad8a27b2c649a4f99"}
+{"_id":{"$oid":"5d20b72f02d14319ac759fce"},"timestamp":{"$date":{"$numberLong":"1562425127050"}},"isDeleted":false,"userId":"5d20a21ad8a27b2c649a4f99"}
+{"_id":{"$oid":"5d20b81b8d994820d04682a7"},"timestamp":{"$date":{"$numberLong":"1562425350970"}},"isDeleted":false,"userId":"5d20a21ad8a27b2c649a4f99"}

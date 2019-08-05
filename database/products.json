@@ -1,0 +1,50 @@
+{"_id":{"$numberInt":"1000001"},"category":"Косметика и средства личной гигиены","name":"Салфетки бумажные \"VETA TOPICANA\"","unit":"шт","weight":{"$numberInt":"100"},"cost":{"$numberDouble":"0.85"}}
+{"_id":{"$numberInt":"1000002"},"category":"Косметика и средства личной гигиены","name":"Салфетки 'SIPTO' (белые)","unit":"шт","weight":{"$numberInt":"100"},"cost":{"$numberDouble":"0.85"}}
+{"_id":{"$numberInt":"1000003"},"category":"Косметика и средства личной гигиены","name":"Мыло 'LILEA' (жидкое, aloe vera)","unit":"л","weight":{"$numberInt":"5"},"cost":{"$numberDouble":"6.99"}}
+{"_id":{"$numberInt":"1000004"},"category":"Косметика и средства личной гигиены","name":"Гель-душ \"FA MEN\" (active спорт)","unit":"мл","weight":{"$numberInt":"750"},"cost":{"$numberDouble":"12.29"}}
+{"_id":{"$numberInt":"1000005"},"category":"Косметика и средства личной гигиены","name":"Гель д/душа 'FA' (алоэ вера)","unit":"мл","weight":{"$numberInt":"400"},"cost":{"$numberDouble":"8.65"}}
+{"_id":{"$numberInt":"1000006"},"category":"Косметика и средства личной гигиены","name":"Бальзам 'ELSEVE' (роскошь,6 масел)","unit":"мл","weight":{"$numberInt":"200"},"cost":{"$numberDouble":"5.49"}}
+{"_id":{"$numberInt":"1000007"},"category":"Косметика и средства личной гигиены","name":"Шампунь 'Schauma' ухаживающий","unit":"мл","weight":{"$numberInt":"750"},"cost":{"$numberDouble":"7.99"}}
+{"_id":{"$numberInt":"1000008"},"category":"Косметика и средства личной гигиены","name":"Лак 'ДЖЕТ' (объем и стойкость)","unit":"мл","weight":{"$numberInt":"300"},"cost":{"$numberDouble":"3.99"}}
+{"_id":{"$numberInt":"1000009"},"category":"Косметика и средства личной гигиены","name":"Пена д/бритья 'GILLETTE' (пит,тон)","unit":"мл","weight":{"$numberInt":"250"},"cost":{"$numberDouble":"7.29"}}
+{"_id":{"$numberInt":"1000010"},"category":"Косметика и средства личной гигиены","name":"Крем д/рук 'LILEA' (комплекс уход)","unit":"г","weight":{"$numberInt":"80"},"cost":{"$numberDouble":"1.39"}}
+{"_id":{"$numberInt":"2000001"},"category":"Сухофрукты, снеки, специи","name":"Фисташки обжаренные","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"39.99"}}
+{"_id":{"$numberInt":"2000002"},"category":"Сухофрукты, снеки, специи","name":"Арахис жар.сол.\"ХМЕЛЬНОВ\" ","unit":"г","weight":{"$numberInt":"230"},"cost":{"$numberDouble":"1.59"}}
+{"_id":{"$numberInt":"2000003"},"category":"Сухофрукты, снеки, специи","name":"Виноград сушеный \"FRESH BOX\" ","unit":"г","weight":{"$numberInt":"200"},"cost":{"$numberDouble":"1.55"}}
+{"_id":{"$numberInt":"2000004"},"category":"Сухофрукты, снеки, специи","name":"Семечки \"МОЛОДЕЖНЫЕ\" (жар,с солью) ","unit":"г","weight":{"$numberInt":"200"},"cost":{"$numberDouble":"1.79"}}
+{"_id":{"$numberInt":"2000005"},"category":"Сухофрукты, снеки, специи","name":"Сухар.\"ХРУСТОВ\" (багет,кол.сыров)","unit":"г","weight":{"$numberInt":"70"},"cost":{"$numberDouble":"0.75"}}
+{"_id":{"$numberInt":"2000006"},"category":"Сухофрукты, снеки, специи","name":"Сухарики\"ФЛИНТ\"(пшен-рж,запеч.рулька)","unit":"г","weight":{"$numberInt":"90"},"cost":{"$numberDouble":"1.09"}}
+{"_id":{"$numberInt":"2000007"},"category":"Сухофрукты, снеки, специи","name":"Рыб.солом\"БАРБЕКЮ\"(сол-суш)\"ФЛОТСКАЯ\"","unit":"г","weight":{"$numberInt":"15"},"cost":{"$numberDouble":"0.85"}}
+{"_id":{"$numberInt":"2000008"},"category":"Сухофрукты, снеки, специи","name":"Чипсы \"TAFFEL SAN DIEGO\" (томат) ","unit":"г","weight":{"$numberInt":"150"},"cost":{"$numberDouble":"2.49"}}
+{"_id":{"$numberInt":"2000009"},"category":"Сухофрукты, снеки, специи","name":"Чипсы \"TAFFEL\" (сыр) ","unit":"г","weight":{"$numberInt":"150"},"cost":{"$numberDouble":"2.49"}}
+{"_id":{"$numberInt":"2000010"},"category":"Сухофрукты, снеки, специи","name":"Чипсы \"DALLAS\" (краб) ","unit":"г","weight":{"$numberInt":"75"},"cost":{"$numberDouble":"1.25"}}
+{"_id":{"$numberInt":"3000001"},"category":"Соки и напитки","name":"Вода минер.\"БЕРЕЗИНСКАЯ-4\"(Aquale)","unit":"л","weight":{"$numberDouble":"1.5"},"cost":{"$numberDouble":"0.79"}}
+{"_id":{"$numberInt":"3000002"},"category":"Соки и напитки","name":"Вода пит.«ДАРИДА» нег.(т.з.Praleska)","unit":"л","weight":{"$numberInt":"6"},"cost":{"$numberDouble":"1.87"}}
+{"_id":{"$numberInt":"3000003"},"category":"Соки и напитки","name":"Вода \"СВЯТОЙ ИСТОЧНИК\" (газ) ","unit":"л","weight":{"$numberDouble":"1.5"},"cost":{"$numberDouble":"0.89"}}
+{"_id":{"$numberInt":"3000004"},"category":"Соки и напитки","name":"Квас \"БЕЛОРУССКИЙ\"(оригин.) ","unit":"л","weight":{"$numberDouble":"1.5"},"cost":{"$numberDouble":"1.79"}}
+{"_id":{"$numberInt":"3000005"},"category":"Соки и напитки","name":"Напиток энерг.\"HELL\"(классич.,ж/б)","unit":"л","weight":{"$numberDouble":"0.25"},"cost":{"$numberDouble":"1.19"}}
+{"_id":{"$numberInt":"3000006"},"category":"Соки и напитки","name":"Нектар \"САДОЧОК\" (мультифрукт) ","unit":"л","weight":{"$numberDouble":"0.2"},"cost":{"$numberDouble":"0.55"}}
+{"_id":{"$numberInt":"3000007"},"category":"Соки и напитки","name":"Сок\"САНДОРА\"(овощной с мякотью)","unit":"л","weight":{"$numberDouble":"0.95"},"cost":{"$numberDouble":"2.89"}}
+{"_id":{"$numberInt":"3000008"},"category":"Соки и напитки","name":"Нектар \"ВИНОГРАДНО-ЯБЛОЧНЫЙ\" ","unit":"л","weight":{"$numberDouble":"0.95"},"cost":{"$numberDouble":"1.55"}}
+{"_id":{"$numberInt":"3000009"},"category":"Соки и напитки","name":"Нектар \"ОДЕССКИЙ\"(мультифрукт.) ","unit":"л","weight":{"$numberDouble":"0.95"},"cost":{"$numberDouble":"1.77"}}
+{"_id":{"$numberInt":"3000010"},"category":"Соки и напитки","name":"Нап.газ.100%\"ЛЕТО ДЮШЕС\"(Сов.классика)","unit":"л","weight":{"$numberInt":"2"},"cost":{"$numberDouble":"1.49"}}
+{"_id":{"$numberInt":"4000001"},"category":"Мясо, колбасы и полуфабрикаты","name":"Колб.вар\"МОЛОЧНАЯ\"(в/с,и/о)Жлоб","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"9.99"}}
+{"_id":{"$numberInt":"4000002"},"category":"Мясо, колбасы и полуфабрикаты","name":"Колб.вар \"МОРТАДЕЛЛА\"(вс,мб)МясКут","unit":"кг","weight":{"$numberDouble":"0.4"},"cost":{"$numberDouble":"2.39"}}
+{"_id":{"$numberInt":"4000003"},"category":"Мясо, колбасы и полуфабрикаты","name":"Колбаса лив.\"СЕЛЬСКАЯ\" (мб) Слоним.","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"2.79"}}
+{"_id":{"$numberInt":"4000004"},"category":"Мясо, колбасы и полуфабрикаты","name":"Сард\"МОРТАДЕЛКИ КЛАСС.\"(1/с,н/о/г)Гом","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"5.29"}}
+{"_id":{"$numberInt":"4000005"},"category":"Мясо, колбасы и полуфабрикаты","name":"Сосиски \"МИНСКИЕ\" (вс,ггаз,ио)МясКут ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"5.09"}}
+{"_id":{"$numberInt":"4000006"},"category":"Мясо, колбасы и полуфабрикаты","name":"Ветчина \"ШИНКА ДЕЛИК\"(1с) Слоним ","unit":"кг","weight":{"$numberDouble":"0.4"},"cost":{"$numberDouble":"4.59"}}
+{"_id":{"$numberInt":"4000007"},"category":"Мясо, колбасы и полуфабрикаты","name":"Окорочок ц-бр.\"АППЕТИТН\"(к/в,в/у)ВБПФ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"9.19"}}
+{"_id":{"$numberInt":"4000008"},"category":"Мясо, колбасы и полуфабрикаты","name":"Свинина кв \"ЗАКУСОЧНАЯ ФИРМ.\"(бк)ММК ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"14.69"}}
+{"_id":{"$numberInt":"4000009"},"category":"Мясо, колбасы и полуфабрикаты","name":"Пельмени \"РУССКАЯ ЛОЖКА\"(столичные) ","unit":"г","weight":{"$numberInt":"400"},"cost":{"$numberDouble":"1.49"}}
+{"_id":{"$numberInt":"4000010"},"category":"Мясо, колбасы и полуфабрикаты","name":"Пельмени \"КОРОЛЕВСКИЕ ПО-ВОЛКОВ\" ","unit":"кг","weight":{"$numberDouble":"0.45"},"cost":{"$numberDouble":"3.19"}}
+{"_id":{"$numberInt":"5000001"},"category":"Рыба и морепродукты","name":"Икра зернист.лосос. \"РЫБПРОМПРОДУКТ\"","unit":"г","weight":{"$numberInt":"95"},"cost":{"$numberDouble":"9.99"}}
+{"_id":{"$numberInt":"5000002"},"category":"Рыба и морепродукты","name":"Краб.палочки \"VICI\" ","unit":"г","weight":{"$numberInt":"240"},"cost":{"$numberDouble":"2.45"}}
+{"_id":{"$numberInt":"5000003"},"category":"Рыба и морепродукты","name":"Филе хека \"VICI\" (панировка) ","unit":"г","weight":{"$numberInt":"300"},"cost":{"$numberDouble":"6.15"}}
+{"_id":{"$numberInt":"5000004"},"category":"Рыба и морепродукты","name":"Сельдь \"РЫБАХИТ\" (филе сельди,сл/с)","unit":"г","weight":{"$numberInt":"240"},"cost":{"$numberDouble":"2.25"}}
+{"_id":{"$numberInt":"5000005"},"category":"Рыба и морепродукты","name":"Лосось (атл.филе-кус,м/с,в/у) ","unit":"г","weight":{"$numberInt":"300"},"cost":{"$numberDouble":"8.99"}}
+{"_id":{"$numberInt":"5000006"},"category":"Рыба и морепродукты","name":"Скумбрия атл(б/г,х/к,в/у)Баренц.","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"17.85"}}
+{"_id":{"$numberInt":"5000007"},"category":"Рыба и морепродукты","name":"Горбуша (потр.б/г,х/к,вес.) РБ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"17.99"}}
+{"_id":{"$numberInt":"5000008"},"category":"Рыба и морепродукты","name":"Янтарная рыбка (вяленая) ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"36.39"}}
+{"_id":{"$numberInt":"5000009"},"category":"Рыба и морепродукты","name":"Рыба вяленая \"КРАСНОПЕРКА\" ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"8.99"}}
+{"_id":{"$numberInt":"5000010"},"category":"Рыба и морепродукты","name":"Кальмар св/м (тушка) фас РФ ","unit":"кг","weight":{"$numberInt":"1"},"cost":{"$numberDouble":"6.49"}}
