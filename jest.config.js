@@ -1,8 +1,8 @@
 module.exports = {
   roots: [
-    '<rootDir>/tests' // путь где искать тесты
+    '<rootDir>/tests'
   ],
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.js$', // где ещё могут лежать тесты (папка __tests__ например), расширения файлов, названия файлов (spec - это спецификация)
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.js$',
   moduleFileExtensions: ['js'],
   testEnvironment: 'node'
 };

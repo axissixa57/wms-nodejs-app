@@ -1,5 +1,4 @@
 import request from 'supertest';
-// import assert from "assert";
 
 // This agent refers to PORT where program is runninng.
 const server = request.agent('http://localhost:3000');

@@ -22,8 +22,8 @@ apiRouter.put('/shipment', apiController.updateShipmentStatus);
 apiRouter.get('/shipments/:id', apiController.getShipmentById);
 apiRouter.get('/shipments', apiController.getShipments);
 apiRouter.get(
-  '/shipments/codecar/:id',
-  apiController.getProductsFromShipmentsByCodeCar
+   '/shipments/codecar/:id',
+   apiController.getProductsFromShipmentsByCodeCar
 );
 apiRouter.post('/shipments', apiController.createShipment);
 apiRouter.put('/shipments', apiController.updateStatusOfShipments);
@@ -42,16 +42,16 @@ apiRouter.post('/warehouses', apiController.createWarehouse);
 apiRouter.post('/warehouses', apiController.addProductsToWarehouse);
 apiRouter.put('/warehouses', apiController.updateWarehouse);
 apiRouter.put(
-  '/warehouse/add-quantity-from-one-to-another',
-  apiController.addQuantutyfromOneWarehouseToAnother
+   '/warehouse/add-quantity-from-one-to-another',
+   apiController.addQuantutyfromOneWarehouseToAnother
 );
 apiRouter.put(
-  '/warehouse/editquantity',
-  apiController.addQuantutyOfGoodsToWarehouse
+   '/warehouse/editquantity',
+   apiController.addQuantutyOfGoodsToWarehouse
 );
-apiRouter.put( 
-  '/warehouse/return-quantity',
-  apiController.returnQuantutyfromOneWarehouseToAnother 
+apiRouter.put(
+   '/warehouse/return-quantity',
+   apiController.returnQuantutyfromOneWarehouseToAnother
 );
 apiRouter.delete('/warehouses/:id', apiController.deleteWarehouse);
 
