@@ -10,11 +10,6 @@ export async function getProducts(req, res) {
     if (err) return console.log(err);
     res.send(products);
   });
-
-//   Product.find({}).then(data => res.json(data)).catch()
-
-//   const data = await Product.find({});
-//   res.json(data)
 }
 
 export function getCosmeticProducts(req, res) {
