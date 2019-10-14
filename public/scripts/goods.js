@@ -19,11 +19,11 @@ function row(product) {
   return `<tr role="row" data-rowid="${product._id}">
                 <td>${++lineNumber}</td>
                 <td>${product._id}</td>
-                <td>${product.category}</td> 
-                <td>${product.name}</td> 
-                <td>${product.unit}</td> 
-                <td>${product.weight}</td> 
-                <td>${product.cost}</td> 
+                <td>${product.category}</td>
+                <td>${product.name}</td>
+                <td>${product.unit}</td>
+                <td>${product.weight}</td>
+                <td>${product.cost}</td>
                 ${role.hasClass('admin') ? partForAdmin : ''};
             </tr>`;
 }
@@ -151,6 +151,7 @@ $('#btnEdit').click(() => {
     $('#EditProductCategory').val() == null
       ? $('#EditProductCategory option:first-child').html()
       : $('#EditProductCategory').val();
+
   const name = $('#EditProductName').val();
   const unit =
     $('#EditProductUnit').val() == null

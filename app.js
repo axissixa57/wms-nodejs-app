@@ -1,4 +1,3 @@
-import http from 'http';
 import mongoose from 'mongoose';
 import express from 'express';
 import path from 'path';
@@ -25,7 +24,6 @@ const app = express();
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
-// app.use(logger('dev'));
 app.use(
    logger((tokens, req, res) => {
       return [
@@ -55,7 +53,6 @@ app.use(
    })
 );
 
-// res.locals.user
 app.use(async (req, res, next) => {
    const { userId } = req.session;
    if (userId) {
@@ -80,7 +77,6 @@ app.use((req, res) => {
 });
 
 mongoose.connect(
-   // 'mongodb://localhost:27017/wmsDB',
    'mongodb+srv://Ax1S:niW2GScgBXO5tjgS@wmscluster-0jm4z.mongodb.net/wms?retryWrites=true&w=majority',
    { useNewUrlParser: true },
    err => {
@@ -91,6 +87,6 @@ mongoose.connect(
 
 app.listen(process.env.PORT || 3000, () => {
    console.log(
-      'Сервер ожидает подключения... Open http://127.0.0.1:3000/ in your browser.'
+      `Сервер ожидает подключения... Open http://127.0.0.1:${process.env.PORT || 3000}/ in your browser.`
    );
 });

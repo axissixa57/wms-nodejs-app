@@ -1,7 +1,0 @@
-{
-    "appService.zipIgnorePattern": [
-        ".vscode{,/**}"
-    ],
-    "appService.deploySubpath": "",
-    "appService.defaultWebAppToDeploy": "/subscriptions/d12152e3-8414-41b4-8e96-5e17af456376/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/wms"
-}

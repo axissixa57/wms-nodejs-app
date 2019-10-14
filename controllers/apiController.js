@@ -5,11 +5,16 @@ import { Warehouse } from '../models/Warehouse';
 import { ShipmentsToTTN } from '../models/ShipmentsToTTN';
 import { TTN } from '../models/TTN';
 
-export function getProducts(req, res) {
+export async function getProducts(req, res) {
   Product.find({}, function (err, products) {
     if (err) return console.log(err);
     res.send(products);
   });
+
+//   Product.find({}).then(data => res.json(data)).catch()
+
+//   const data = await Product.find({});
+//   res.json(data)
 }
 
 export function getCosmeticProducts(req, res) {
@@ -546,7 +551,7 @@ export async function addQuantutyfromOneWarehouseToAnother(req, res) {
 
   const warehouseAddressee = await Warehouse.findOne({ _id: consigneeId });
 
-  // update quantity 
+  // update quantity
   for (let i = 0; i < sentProducts.length; i++) {
     const productFromWarehouse = await Warehouse.findOne(
       { _id: warehouseId, 'products.id_product': sentProducts[i].id },
@@ -697,7 +702,7 @@ export async function returnQuantutyfromOneWarehouseToAnother(req, res) {
 
   const warehouseAddressee = await Warehouse.findOne({ _id: consigneeId });
 
-  // update quantity 
+  // update quantity
   for (let i = 0; i < sentProducts.length; i++) {
     const productFromWarehouse = await Warehouse.findOne(
       { _id: warehouseId, 'products.id_product': sentProducts[i].id },
